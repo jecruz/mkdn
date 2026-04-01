@@ -1,4 +1,5 @@
 import AppKit
+import Combine
 import SwiftUI
 
 /// Wrapper view that creates a per-window ``DocumentState`` and wires it into
@@ -70,6 +71,12 @@ public struct DocumentWindow: View {
                 for url in FileOpenCoordinator.shared.consumeAll() {
                     openWindow(value: url)
                 }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .openHelpWindow)) { _ in
+                openWindow(id: "help-window")
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .openMarkdownGuide)) { _ in
+                openWindow(id: "markdown-guide")
             }
     }
 }

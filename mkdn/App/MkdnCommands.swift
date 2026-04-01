@@ -2,6 +2,11 @@ import SwiftUI
 import UniformTypeIdentifiers
 import Combine
 
+extension Notification.Name {
+    static let openHelpWindow = Notification.Name("openHelpWindow")
+    static let openMarkdownGuide = Notification.Name("openMarkdownGuide")
+}
+
 /// Application menu commands.
 ///
 /// Uses `AppSettings` for theme operations and `@FocusedValue` to access
@@ -152,6 +157,20 @@ public struct MkdnCommands: Commands {
                 }
                 .keyboardShortcut("0", modifiers: .command)
             }
+        }
+
+        CommandGroup(replacing: .help) {
+            Button("mkdn Help") {
+                NotificationCenter.default.post(name: .openHelpWindow, object: nil)
+            }
+            .keyboardShortcut("?", modifiers: .command)
+
+            Divider()
+
+            Button("Markdown Guide") {
+                NotificationCenter.default.post(name: .openMarkdownGuide, object: nil)
+            }
+            .keyboardShortcut("m", modifiers: [.command, .shift])
         }
 
         CommandGroup(after: .sidebar) {

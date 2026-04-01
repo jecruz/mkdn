@@ -44,6 +44,12 @@ public final class DocumentState {
     /// Label text for the ephemeral mode transition overlay.
     public var modeOverlayLabel: String?
 
+    // MARK: - Lint State
+
+    public var lintIssues: [LintIssue] = []
+    private let linter = MarkdownLinter()
+    private var lintTask: Task<Void, Never>?
+
     public init() {}
 
     // MARK: - Methods
@@ -106,5 +112,15 @@ public final class DocumentState {
     public func switchMode(to mode: ViewMode) {
         viewMode = mode
         modeOverlayLabel = mode == .previewOnly ? "Preview" : "Edit"
+    }
+
+    /// Runs the linter after a 300ms debounce. Called when `markdownContent` changes.
+    public func scheduleLint() {
+        lintTask?.cancel()
+        lintTask = Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(300))
+            guard !Task.isCancelled else { return }
+            lintIssues = linter.lint(markdownContent)
+        }
     }
 }

@@ -7,24 +7,37 @@ import SwiftUI
 struct MarkdownEditorView: View {
     @Binding var text: String
     @Environment(AppSettings.self) private var appSettings
+    @Environment(DocumentState.self) private var documentState
     @FocusState private var isFocused: Bool
 
     var body: some View {
-        TextEditor(text: $text)
-            .font(.system(.body, design: .monospaced))
-            .foregroundColor(appSettings.theme.colors.foreground)
-            .scrollContentBackground(.hidden)
-            .background(appSettings.theme.colors.background)
-            .focused($isFocused)
-            .focusEffectDisabled()
-            .padding(8)
-            .overlay(
-                RoundedRectangle(cornerRadius: 4)
-                    .stroke(
-                        appSettings.theme.colors.accent.opacity(isFocused ? 0.3 : 0),
-                        lineWidth: 1.5
-                    )
-            )
-            .animation(AnimationConstants.quickShift, value: isFocused)
+        VStack(spacing: 0) {
+            HStack {
+                Spacer()
+                LintBadgeView(count: documentState.lintIssues.count)
+            }
+            .padding(.horizontal, 8)
+            .padding(.top, 4)
+
+            TextEditor(text: $text)
+                .font(.system(.body, design: .monospaced))
+                .foregroundColor(appSettings.theme.colors.foreground)
+                .scrollContentBackground(.hidden)
+                .background(appSettings.theme.colors.background)
+                .focused($isFocused)
+                .focusEffectDisabled()
+                .padding(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(
+                            appSettings.theme.colors.accent.opacity(isFocused ? 0.3 : 0),
+                            lineWidth: 1.5
+                        )
+                )
+                .animation(AnimationConstants.quickShift, value: isFocused)
+                .onChange(of: text) {
+                    documentState.scheduleLint()
+                }
+        }
     }
 }
