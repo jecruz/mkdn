@@ -29,7 +29,7 @@ public struct HelpWindowView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(appSettings.theme.colors.background)
         }
-        .frame(minWidth: 500, minHeight: 350)
+        .frame(minWidth: 600, minHeight: 450)
     }
 }
 
