@@ -32,6 +32,7 @@ struct SelectableTextView: NSViewRepresentable {
 
         Self.configureTextView(textView)
         Self.configureScrollView(scrollView)
+        textView.documentState = documentState
 
         let coordinator = context.coordinator
         coordinator.textView = textView
@@ -60,12 +61,13 @@ struct SelectableTextView: NSViewRepresentable {
     }
 
     func updateNSView(_ scrollView: NSScrollView, context: Context) {
-        guard let textView = scrollView.documentView as? NSTextView else {
+        guard let textView = scrollView.documentView as? CodeBlockBackgroundTextView else {
             return
         }
 
         let coordinator = context.coordinator
 
+        textView.documentState = documentState
         applyTheme(to: textView, scrollView: scrollView)
 
         let isNewContent = coordinator.lastAppliedText !== attributedText

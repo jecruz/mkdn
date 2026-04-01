@@ -7,6 +7,7 @@ import AppKit
 /// Markdown files from Finder, dock drag-and-drop, or other applications.
 @MainActor
 public final class AppDelegate: NSObject, NSApplicationDelegate {
+
     public func applicationWillFinishLaunching(_: Notification) {
         NSApp.setActivationPolicy(.regular)
 

@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 /// Bridges system file-open events from the AppKit delegate into SwiftUI window management.
 ///
@@ -13,6 +14,9 @@ public final class FileOpenCoordinator {
 
     /// URLs waiting to be opened in new windows.
     public var pendingURLs: [URL] = []
+
+    /// Callback to open a SwiftUI window, registered by ``DocumentWindow`` on appear.
+    public var openWindowHandler: ((URL) -> Void)?
 
     /// Returns all pending URLs and clears the queue.
     public func consumeAll() -> [URL] {

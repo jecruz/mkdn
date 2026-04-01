@@ -20,6 +20,10 @@ import SwiftUI
 /// the hovered code block. Clicking the button copies the raw code content
 /// (without language label) to the system clipboard.
 final class CodeBlockBackgroundTextView: NSTextView {
+    // MARK: - Document State
+
+    weak var documentState: DocumentState?
+
     // MARK: - Constants
 
     private static let cornerRadius: CGFloat = 6
@@ -390,5 +394,57 @@ final class CodeBlockBackgroundTextView: NSTextView {
         else { return nil }
 
         return NSTextRange(location: startLocation, end: endLocation)
+    }
+
+    // MARK: - Context Menu
+
+    override func menu(for event: NSEvent) -> NSMenu? {
+        let menu = super.menu(for: event) ?? NSMenu()
+
+        menu.addItem(.separator())
+
+        if let state = documentState {
+            if state.viewMode == .sideBySide {
+                let previewItem = NSMenuItem(
+                    title: "Preview Mode",
+                    action: #selector(switchToPreviewMode),
+                    keyEquivalent: ""
+                )
+                previewItem.target = self
+                menu.addItem(previewItem)
+            } else {
+                let editItem = NSMenuItem(
+                    title: "Edit Mode",
+                    action: #selector(switchToEditMode),
+                    keyEquivalent: ""
+                )
+                editItem.target = self
+                menu.addItem(editItem)
+            }
+        }
+
+        menu.addItem(.separator())
+
+        let closeItem = NSMenuItem(
+            title: "Close Window",
+            action: #selector(closeCurrentWindow),
+            keyEquivalent: ""
+        )
+        closeItem.target = self
+        menu.addItem(closeItem)
+
+        return menu
+    }
+
+    @objc private func switchToPreviewMode() {
+        documentState?.switchMode(to: .previewOnly)
+    }
+
+    @objc private func switchToEditMode() {
+        documentState?.switchMode(to: .sideBySide)
+    }
+
+    @objc private func closeCurrentWindow() {
+        window?.close()
     }
 }

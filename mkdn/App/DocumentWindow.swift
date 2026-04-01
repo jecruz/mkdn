@@ -49,6 +49,8 @@ public struct DocumentWindow: View {
                     if let first = pending.first {
                         try? documentState.loadFile(at: first)
                         NSDocumentController.shared.noteNewRecentDocumentURL(first)
+                        // Switch to edit mode for files opened from New Markdown action
+                        documentState.switchMode(to: .sideBySide)
                     }
                     for url in pending.dropFirst() {
                         openWindow(value: url)
@@ -58,6 +60,9 @@ public struct DocumentWindow: View {
                     TestHarnessHandler.appSettings = appSettings
                     TestHarnessHandler.documentState = documentState
                     TestHarnessServer.shared.start()
+                }
+                FileOpenCoordinator.shared.openWindowHandler = { url in
+                    openWindow(value: url)
                 }
                 isReady = true
             }

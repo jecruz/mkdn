@@ -1,5 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
+import Combine
 
 /// Application menu commands.
 ///
@@ -29,13 +30,6 @@ public struct MkdnCommands: Commands {
                     documentState?.modeOverlayLabel = "Default Markdown App Set"
                 }
             }
-        }
-
-        CommandGroup(before: .saveItem) {
-            Button("Close Window") {
-                NSApplication.shared.keyWindow?.close()
-            }
-            .keyboardShortcut("w", modifiers: .command)
         }
 
         CommandGroup(replacing: .saveItem) {
@@ -95,7 +89,37 @@ public struct MkdnCommands: Commands {
             .keyboardShortcut("p", modifiers: .command)
         }
 
-        CommandGroup(after: .importExport) {
+        CommandGroup(replacing: .newItem) {
+            Button("New Markdown") {
+                createNewMarkdownFile()
+            }
+            .keyboardShortcut("n", modifiers: .command)
+
+            Button("Close Window") {
+                NSApplication.shared.keyWindow?.close()
+            }
+            .keyboardShortcut("w", modifiers: .command)
+            .disabled(NSApplication.shared.keyWindow == nil)
+
+            Divider()
+
+            Menu("Open Recent") {
+                ForEach(
+                    NSDocumentController.shared.recentDocumentURLs,
+                    id: \.self
+                ) { url in
+                    Button(url.lastPathComponent) {
+                        FileOpenCoordinator.shared.pendingURLs.append(url)
+                    }
+                }
+                Divider()
+                Button("Clear Menu") {
+                    NSDocumentController.shared.clearRecentDocuments(nil)
+                }
+            }
+
+            Divider()
+
             Button("Open...") {
                 openFile()
             }
@@ -181,5 +205,29 @@ public struct MkdnCommands: Commands {
 
         guard panel.runModal() == .OK, let url = panel.url else { return }
         try? documentState?.loadFile(at: url)
+    }
+
+    @MainActor
+    private func createNewMarkdownFile() {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let timestamp = ISO8601DateFormatter().string(from: Date()).replacingOccurrences(of: ":", with: "-")
+        let newFileURL = documentsURL.appendingPathComponent("Untitled-\(timestamp).md")
+
+        do {
+            try "# New Document\n\n".write(to: newFileURL, atomically: true, encoding: .utf8)
+            if documentState?.currentFileURL == nil {
+                // Welcome screen or no windows: close splash, open new document
+                let window = NSApplication.shared.keyWindow
+                FileOpenCoordinator.shared.openWindowHandler?(newFileURL)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    window?.close()
+                }
+            } else {
+                // File already open: open in new window
+                FileOpenCoordinator.shared.pendingURLs.append(newFileURL)
+            }
+        } catch {
+            print("Failed to create new markdown file: \(error)")
+        }
     }
 }

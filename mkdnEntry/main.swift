@@ -1,12 +1,14 @@
 import AppKit
 import mkdnLib
 import SwiftUI
+import Combine
 
 // MARK: - SwiftUI App (no @main)
 
 struct MkdnApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State private var appSettings = AppSettings()
+    @State private var newMarkdownTrigger = false
 
     var body: some Scene {
         WindowGroup(for: URL.self) { $fileURL in // swiftlint:disable:this unused_parameter
@@ -18,7 +20,6 @@ struct MkdnApp: App {
         .commands {
             CommandGroup(replacing: .newItem) {}
             MkdnCommands(appSettings: appSettings)
-            OpenRecentCommands()
         }
     }
 }
