@@ -79,6 +79,7 @@ struct LintAwareEditorView: NSViewRepresentable {
         }
 
         applyLintUnderlines(to: textView)
+        applyLintTooltips(to: textView)
     }
 
     /// Apply dashed yellow underlines to text ranges flagged by the linter.
@@ -107,6 +108,31 @@ struct LintAwareEditorView: NSViewRepresentable {
                 value: NSColor.systemYellow,
                 range: nsRange
             )
+        }
+    }
+
+    /// Set tooltips on the NSTextView for each lint issue range.
+    private func applyLintTooltips(to textView: NSTextView) {
+        // Remove all existing tooltips
+        textView.removeAllToolTips()
+
+        let content = textView.string
+        guard let layoutManager = textView.layoutManager,
+              let textContainer = textView.textContainer else { return }
+
+        for issue in lintIssues {
+            guard let nsRange = nsRange(from: issue.range, in: content) else { continue }
+            guard nsRange.upperBound <= content.utf16.count else { continue }
+
+            // Convert character range to glyph range then to bounding rect
+            let glyphRange = layoutManager.glyphRange(forCharacterRange: nsRange, actualCharacterRange: nil)
+            let boundingRect = layoutManager.boundingRect(forGlyphRange: glyphRange, in: textContainer)
+
+            // Offset by textContainerInset
+            let inset = textView.textContainerInset
+            let offsetRect = boundingRect.offsetBy(dx: inset.width, dy: inset.height)
+
+            textView.addToolTip(offsetRect, owner: issue.message as NSString, userData: nil)
         }
     }
 
