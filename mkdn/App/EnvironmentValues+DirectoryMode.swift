@@ -1,7 +1,14 @@
 #if os(macOS)
     import SwiftUI
 
+    private struct IsDirectoryModeKey: EnvironmentKey {
+        static let defaultValue: Bool = false
+    }
+
     public extension EnvironmentValues {
-        @Entry var isDirectoryMode = false
+        var isDirectoryMode: Bool {
+            get { self[IsDirectoryModeKey.self] }
+            set { self[IsDirectoryModeKey.self] = newValue }
+        }
     }
 #endif

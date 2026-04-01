@@ -43,6 +43,73 @@
             themeMode.resolved(for: systemColorScheme)
         }
 
+        // MARK: - Color Palette
+
+        /// User's color palette selection (built-in or custom mix).
+        /// Persisted to UserDefaults via UserPaletteSelection.save().
+        public var userPaletteSelection: UserPaletteSelection {
+            didSet {
+                userPaletteSelection.save()
+            }
+        }
+
+        /// Theme colors with custom palette applied.
+        /// Returns custom colors when the user is mixing independently,
+        /// otherwise returns nil (built-in AppTheme is used directly).
+        public var customColors: ThemeColors? {
+            guard userPaletteSelection.isCustomMixing,
+                  let bg = userPaletteSelection.customBackground,
+                  let fg = userPaletteSelection.customText
+            else { return nil }
+
+            let bgColor = Color(hex: bg)
+            let fgColor = Color(hex: fg)
+
+            return ThemeColors(
+                background: bgColor,
+                backgroundSecondary: bgColor.opacity(0.85),
+                foreground: fgColor,
+                foregroundSecondary: fgColor.opacity(0.7),
+                accent: fgColor.opacity(0.6),
+                border: fgColor.opacity(0.2),
+                codeBackground: bgColor.opacity(0.6),
+                codeForeground: fgColor,
+                linkColor: fgColor.opacity(0.8),
+                headingColor: fgColor,
+                blockquoteBorder: fgColor.opacity(0.4),
+                blockquoteBackground: bgColor.opacity(0.5),
+                findHighlight: fgColor.opacity(0.6)
+            )
+        }
+
+        /// Theme colors derived from the selected built-in palette.
+        public var builtInPaletteColors: ThemeColors? {
+            guard let palette = userPaletteSelection.builtInPalette else { return nil }
+            let bg = Color(hex: palette.background)
+            let fg = Color(hex: palette.text)
+            let accent = Color(hex: palette.accent)
+            return ThemeColors(
+                background: bg,
+                backgroundSecondary: bg.opacity(0.85),
+                foreground: fg,
+                foregroundSecondary: fg.opacity(0.7),
+                accent: accent,
+                border: fg.opacity(0.2),
+                codeBackground: bg.opacity(0.6),
+                codeForeground: fg,
+                linkColor: accent,
+                headingColor: fg,
+                blockquoteBorder: fg.opacity(0.4),
+                blockquoteBackground: bg.opacity(0.5),
+                findHighlight: accent
+            )
+        }
+
+        /// Effective theme colors: built-in palette > custom mix > theme default.
+        public var effectiveColors: ThemeColors {
+            builtInPaletteColors ?? customColors ?? theme.colors
+        }
+
         // MARK: - Default Handler Hint
 
         /// Whether the first-launch default handler hint has been shown.
@@ -106,6 +173,7 @@
             }
 
             hasShownDefaultHandlerHint = UserDefaults.standard.bool(forKey: hasShownDefaultHandlerHintKey)
+            userPaletteSelection = UserPaletteSelection.load()
             autoReloadEnabled = UserDefaults.standard.bool(forKey: autoReloadEnabledKey)
 
             let storedScale = CGFloat(UserDefaults.standard.double(forKey: scaleFactorKey))
@@ -154,5 +222,10 @@
         public var zoomLabel: String {
             "\(Int(round(scaleFactor * 100)))%"
         }
+
+        // MARK: - Color Palette Popover
+
+        /// Whether the color palette popover is shown.
+        public var showColorPalettePopover: Bool = false
     }
 #endif

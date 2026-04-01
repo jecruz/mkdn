@@ -175,6 +175,11 @@
                         documentState?.modeOverlayLabel = appSettings.themeMode.displayName
                     }
                     .keyboardShortcut("t", modifiers: [.command, .shift])
+
+                    Button("Color Palette\u{2026}") {
+                        appSettings.showColorPalettePopover = true
+                    }
+                    .keyboardShortcut("p", modifiers: [.command, .shift])
                 }
 
                 Section {
