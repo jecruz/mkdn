@@ -22,6 +22,10 @@ public struct MarkdownGuideView: View {
             .background(appSettings.theme.colors.background)
         }
         .frame(minWidth: 550, minHeight: 400)
+        .background(WindowAccessor { window in
+            window?.level = .floating
+            window?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+        })
     }
 
     @ViewBuilder

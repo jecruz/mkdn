@@ -42,7 +42,19 @@ public struct ContentView: View {
             }
         }
         .frame(minWidth: 600, minHeight: 400)
-        .background(WindowAccessor())
+        .background(WindowAccessor { window in
+            guard let window else { return }
+            window.titlebarAppearsTransparent = true
+            window.titleVisibility = .hidden
+            window.isMovableByWindowBackground = true
+            window.standardWindowButton(.closeButton)?.isHidden = true
+            window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+            window.standardWindowButton(.zoomButton)?.isHidden = true
+            DispatchQueue.main.async {
+                window.makeKeyAndOrderFront(nil)
+                window.orderFrontRegardless()
+            }
+        })
         .onAppear {
             appSettings.systemColorScheme = colorScheme
         }
