@@ -73,10 +73,20 @@ public struct DocumentWindow: View {
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: .openHelpWindow)) { _ in
-                openWindow(id: "help-window")
+                if let existing = NSApp.windows.first(where: { $0.title == "mkdn Help" }) {
+                    existing.makeKeyAndOrderFront(nil)
+                    NSApp.activate(ignoringOtherApps: true)
+                } else {
+                    openWindow(id: "help-window")
+                }
             }
             .onReceive(NotificationCenter.default.publisher(for: .openMarkdownGuide)) { _ in
-                openWindow(id: "markdown-guide")
+                if let existing = NSApp.windows.first(where: { $0.title == "Markdown Guide" }) {
+                    existing.makeKeyAndOrderFront(nil)
+                    NSApp.activate(ignoringOtherApps: true)
+                } else {
+                    openWindow(id: "markdown-guide")
+                }
             }
     }
 }
