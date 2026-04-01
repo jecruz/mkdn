@@ -3,7 +3,7 @@ import SwiftUI
 /// In-app Help window with sidebar navigation.
 public struct HelpWindowView: View {
     @Environment(AppSettings.self) private var appSettings
-    @State private var selectedSection: HelpSection = .shortcuts
+    @State private var selectedSection: HelpSection? = .shortcuts
 
     public init() {}
 
@@ -11,11 +11,12 @@ public struct HelpWindowView: View {
         NavigationSplitView {
             List(HelpSection.allCases, selection: $selectedSection) { section in
                 Label(section.rawValue, systemImage: section.icon)
+                    .tag(section)
             }
             .navigationSplitViewColumnWidth(min: 140, ideal: 160, max: 200)
         } detail: {
             ScrollView {
-                switch selectedSection {
+                switch selectedSection ?? .shortcuts {
                 case .shortcuts:
                     ShortcutsSection()
                 case .features:

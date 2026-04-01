@@ -13,6 +13,7 @@ struct WelcomeView: View {
     @Environment(AppSettings.self) private var appSettings
     @Environment(DocumentState.self) private var documentState
     @Environment(\.openWindow) private var openWindow
+    @State private var hostWindow: NSWindow?
 
     var body: some View {
         VStack(spacing: 20) {
@@ -46,6 +47,7 @@ struct WelcomeView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(appSettings.theme.colors.background)
+        .background(WindowAccessor { window in hostWindow = window })
         #if os(macOS)
         .contextMenu {
             Button("Close Window") {
@@ -102,7 +104,8 @@ struct WelcomeView: View {
 
         do {
             try "# New Document\n\n".write(to: newFileURL, atomically: true, encoding: .utf8)
-            let window = NSApp.keyWindow
+            // Use the captured host window — NSApp.keyWindow can be nil when a context menu fires
+            let window = hostWindow ?? NSApp.keyWindow
             FileOpenCoordinator.shared.openWindowHandler?(newFileURL)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 window?.close()

@@ -3,7 +3,7 @@ import SwiftUI
 /// Floating read-only Markdown syntax reference window.
 public struct MarkdownGuideView: View {
     @Environment(AppSettings.self) private var appSettings
-    @State private var selectedSection: GuideSection = .headings
+    @State private var selectedSection: GuideSection? = .headings
 
     public init() {}
 
@@ -11,11 +11,12 @@ public struct MarkdownGuideView: View {
         NavigationSplitView {
             List(GuideSection.allCases, selection: $selectedSection) { section in
                 Label(section.rawValue, systemImage: section.icon)
+                    .tag(section)
             }
             .navigationSplitViewColumnWidth(min: 130, ideal: 150, max: 180)
         } detail: {
             ScrollView {
-                guideContent(for: selectedSection)
+                guideContent(for: selectedSection ?? .headings)
                     .padding(24)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
