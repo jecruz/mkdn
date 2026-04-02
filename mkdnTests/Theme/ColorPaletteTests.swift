@@ -62,8 +62,8 @@ struct ColorPaletteTests {
 
     @Test
     func swatchPoolNotEmpty() {
-        #expect(PaletteLibrary.backgroundSwatches.count == 10)
-        #expect(PaletteLibrary.textSwatches.count == 10)
+        #expect(PaletteLibrary.backgroundSwatches.count == 15)
+        #expect(PaletteLibrary.textSwatches.count == 15)
     }
 
     // MARK: - Regression: builtInPaletteId uses id, not name

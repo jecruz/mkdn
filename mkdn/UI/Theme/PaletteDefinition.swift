@@ -153,6 +153,51 @@ enum PaletteLibrary {
             text: "#24292e",
             accent: "#0366d6",
             isBuiltIn: true
+        ),
+        // Tokyo Night
+        PaletteDefinition(
+            id: "tokyo-night",
+            name: "Tokyo Night",
+            background: "#1a1b26",
+            text: "#a9b1d6",
+            accent: "#7aa2f7",
+            isBuiltIn: true
+        ),
+        // Rose Pine
+        PaletteDefinition(
+            id: "rose-pine",
+            name: "Rose Pine",
+            background: "#191724",
+            text: "#e0def4",
+            accent: "#ebbcba",
+            isBuiltIn: true
+        ),
+        // Catppuccin Mocha
+        PaletteDefinition(
+            id: "catppuccin-mocha",
+            name: "Catppuccin Mocha",
+            background: "#1e1e2e",
+            text: "#cdd6f4",
+            accent: "#fab387",
+            isBuiltIn: true
+        ),
+        // Cyberpunk
+        PaletteDefinition(
+            id: "cyberpunk",
+            name: "Cyberpunk",
+            background: "#000000",
+            text: "#FF9500",
+            accent: "#ff003c",
+            isBuiltIn: true
+        ),
+        // Matcha Latte
+        PaletteDefinition(
+            id: "matcha-latte",
+            name: "Matcha Latte",
+            background: "#E67E22",
+            text: "#3a4a35",
+            accent: "#8ea604",
+            isBuiltIn: true
         )
     ]
 
@@ -167,6 +212,11 @@ enum PaletteLibrary {
         "#0d1117", // GitHub dark background
         "#272822", // Monokai background
         "#282c34", // One Dark background
+        "#1a1b26", // Tokyo Night background
+        "#191724", // Rose Pine background
+        "#1e1e2e", // Catppuccin background
+        "#000000", // Cyberpunk
+        "#3a4a35", // Matcha Latte
         "#ffffff"  // GitHub Light background
     ]
 
@@ -176,10 +226,15 @@ enum PaletteLibrary {
         "#93a1a1", // Solarized base1
         "#657b83", // Solarized light base00
         "#f8f8f2", // Dracula text
-        "#d8dee9", // Nord text
+        "#e6ea0dd0", // Nord text
         "#c9d1d9", // GitHub dark text
         "#f92672", // Monokai accent (for contrast demo)
         "#abb2bf", // One Dark text
+        "#a9b1d6", // Tokyo Night text
+        "#e0def4", // Rose Pine text
+        "#CDD6F4", // Catppuccin Mocha
+        "#E67E22", // Burnt Orange (Replaced Matcha Latte background)
+        "#FF9500", // Bright Orange (Replaced Cyberpunk text)
         "#24292e", // GitHub Light text
         "#586e75"  // Solarized base01
     ]

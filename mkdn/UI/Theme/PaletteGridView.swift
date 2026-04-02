@@ -6,7 +6,7 @@ struct PaletteGridView: View {
     let palettes: [PaletteDefinition]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .center, spacing: 8) {
             Text("PALETTES")
                 .font(.caption2)
                 .fontWeight(.semibold)
@@ -27,7 +27,7 @@ struct PaletteGridView: View {
                                 selection.customText = nil
                             }
                         )
-                        .frame(width: 24, height: 24)
+                        .frame(width: 30, height: 30)
                         .overlay {
                             Text(palette.name)
                                 .font(.system(size: 9))
@@ -37,7 +37,10 @@ struct PaletteGridView: View {
                         }
                     }
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 16)
             }
         }
+        .frame(maxWidth: .infinity)
     }
 }

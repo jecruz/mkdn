@@ -37,6 +37,6 @@ struct ColorPalettePopover: View {
             Spacer()
         }
         .padding(16)
-        .frame(width: 360, height: 280)
+        .frame(width: 600, height: 280)
     }
 }
