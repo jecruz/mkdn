@@ -52,6 +52,10 @@ struct SwatchPickerView: View {
                             action: {
                                 selection.customText = hex
                                 selection.builtInPaletteId = nil
+                                // If background not yet set, derive from this swatch
+                                if selection.customBackground == nil {
+                                    selection.customBackground = PaletteLibrary.backgroundSwatches.first { $0 != hex }
+                                }
                             }
                         )
                     }

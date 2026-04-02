@@ -105,12 +105,10 @@
             }
 
             // Custom mix is second.
-            if selection.isCustomMixing,
-               let bg = selection.customBackground,
-               let fg = selection.customText
-            {
-                let bgColor = Color(hex: bg)
-                let fgColor = Color(hex: fg)
+            if selection.isCustomMixing {
+                let bgColor = selection.customBackground.map { Color(hex: $0) } ?? theme.colors.background
+                let fgColor = selection.customText.map { Color(hex: $0) } ?? theme.colors.foreground
+                
                 return ThemeColors(
                     background: bgColor,
                     backgroundSecondary: bgColor.opacity(0.85),

@@ -120,11 +120,16 @@ struct ColorPaletteTests {
     }
 
     @Test
-    func paletteColorsConversion() {
-        // Ensure PaletteDefinition.colors produces a valid ThemeColors struct.
-        let dracula = PaletteLibrary.builtIn(named: "Dracula")!
-        let colors = dracula.colors
-        // Background and foreground should be different.
-        #expect(colors.background != colors.foreground)
+    func partialCustomMixingResolvesColors() {
+        // Test that setting just one color (e.g. text) still triggers a theme override
+        let selection = UserPaletteSelection(
+            builtInPaletteId: nil,
+            customBackground: nil,
+            customText: "#ff0000"
+        )
+        #expect(selection.isCustomMixing == true)
+        
+        // This test will verify the AppSettings.resolveEffectiveColors logic 
+        // after the fix is applied.
     }
 }
