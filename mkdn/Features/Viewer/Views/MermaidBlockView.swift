@@ -24,7 +24,7 @@
         @State private var isCursorPushed = false
 
         private var colors: ThemeColors {
-            appSettings.theme.colors
+            appSettings.effectiveColors
         }
 
         private var motion: MotionPreference {

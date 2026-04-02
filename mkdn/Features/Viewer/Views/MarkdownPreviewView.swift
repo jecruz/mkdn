@@ -52,7 +52,7 @@
                 headingOffsets: textStorageResult.headingOffsets,
                 isLoadingGateActive: $docState.isLoadingGateActive
             )
-            .background(appSettings.theme.colors.background)
+            .background(appSettings.effectiveColors.background)
             .task(id: documentState.markdownContent) {
                 if isInitialRender {
                     isInitialRender = false

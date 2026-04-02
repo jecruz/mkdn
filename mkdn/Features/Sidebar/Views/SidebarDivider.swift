@@ -43,7 +43,7 @@
         var body: some View {
             DragBlocker()
                 .frame(width: Self.width)
-                .background(appSettings.theme.colors.backgroundSecondary)
+                .background(appSettings.effectiveColors.backgroundSecondary)
                 .contentShape(Rectangle())
                 .gesture(
                     DragGesture(coordinateSpace: .global)

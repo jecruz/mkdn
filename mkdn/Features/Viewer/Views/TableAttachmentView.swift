@@ -21,7 +21,7 @@
         @State private var selectionState = TableSelectionState()
 
         private var colors: ThemeColors {
-            appSettings.theme.colors
+            appSettings.effectiveColors
         }
 
         private var scaleFactor: CGFloat {

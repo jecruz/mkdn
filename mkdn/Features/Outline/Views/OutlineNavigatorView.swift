@@ -183,12 +183,12 @@
             .frame(maxHeight: isExpanded ? expandedHeight + stretchH : nil)
             .fixedSize(horizontal: !isExpanded, vertical: !isExpanded)
             .background(.ultraThinMaterial)
-            .background(appSettings.theme.colors.background.opacity(0.6))
+            .background(appSettings.effectiveColors.background.opacity(0.6))
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .strokeBorder(
-                        appSettings.theme.colors.border.opacity(isExpanded ? 0.15 : 0.4),
+                        appSettings.effectiveColors.border.opacity(isExpanded ? 0.15 : 0.4),
                         lineWidth: 0.5
                     )
             )
@@ -363,7 +363,7 @@
             return HStack(spacing: 6) {
                 if isCurrentHeading {
                     Circle()
-                        .fill(appSettings.theme.colors.accent)
+                        .fill(appSettings.effectiveColors.accent)
                         .frame(width: 5, height: 5)
                 } else {
                     Spacer()
@@ -372,7 +372,7 @@
 
                 Text(node.title)
                     .font(.system(size: 13, weight: isCurrentHeading ? .semibold : .regular))
-                    .foregroundStyle(appSettings.theme.colors.foreground)
+                    .foregroundStyle(appSettings.effectiveColors.foreground)
                     .lineLimit(1)
                     .truncationMode(.tail)
             }
@@ -382,7 +382,7 @@
             .frame(height: 32)
             .background(
                 isSelected
-                    ? appSettings.theme.colors.accent.opacity(0.15)
+                    ? appSettings.effectiveColors.accent.opacity(0.15)
                     : Color.clear
             )
             .contentShape(Rectangle())

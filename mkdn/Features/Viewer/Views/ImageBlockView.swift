@@ -21,7 +21,7 @@
         @State private var isLoading = true
 
         private var colors: ThemeColors {
-            appSettings.theme.colors
+            appSettings.effectiveColors
         }
 
         private var effectiveWidth: CGFloat {

@@ -49,7 +49,7 @@
         func makeThematicBreakOverlay(
             appSettings: AppSettings
         ) -> NSView {
-            let borderColor = appSettings.theme.colors.border
+            let borderColor = appSettings.effectiveColors.border
             let rootView = borderColor
                 .frame(height: 1)
                 .padding(.vertical, 8)

@@ -4,9 +4,11 @@ import SwiftUI
 struct ColorPalettePopover: View {
     @Binding var isOpen: Bool
 
-    @State private var selection: UserPaletteSelection = .default
+    @Environment(AppSettings.self) private var appSettings
 
     var body: some View {
+        @Bindable var settings = appSettings
+
         VStack(alignment: .leading, spacing: 16) {
             // Header
             HStack {
@@ -26,21 +28,15 @@ struct ColorPalettePopover: View {
 
             Divider()
 
-            PaletteGridView(selection: $selection, palettes: PaletteLibrary.builtIns)
+            PaletteGridView(selection: $settings.userPaletteSelection, palettes: PaletteLibrary.builtIns)
 
             Divider()
 
-            SwatchPickerView(selection: $selection)
+            SwatchPickerView(selection: $settings.userPaletteSelection)
 
             Spacer()
         }
         .padding(16)
-        .frame(width: 320, height: 260)
-        .onAppear {
-            selection = UserPaletteSelection.load()
-        }
-        .onChange(of: selection) { _, newValue in
-            newValue.save()
-        }
+        .frame(width: 360, height: 280)
     }
 }

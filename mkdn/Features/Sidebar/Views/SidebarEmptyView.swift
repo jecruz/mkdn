@@ -9,10 +9,10 @@
             VStack(spacing: 8) {
                 Image(systemName: "doc.text.magnifyingglass")
                     .font(.title2)
-                    .foregroundStyle(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundStyle(appSettings.effectiveColors.foregroundSecondary)
                 Text("No text files found")
                     .font(.callout)
-                    .foregroundStyle(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundStyle(appSettings.effectiveColors.foregroundSecondary)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }

@@ -19,7 +19,7 @@
             @Bindable var state = documentState
 
             return MarkdownEditorView(text: $state.markdownContent)
-                .background(appSettings.theme.colors.background)
+                .background(appSettings.effectiveColors.background)
         }
     }
 #endif

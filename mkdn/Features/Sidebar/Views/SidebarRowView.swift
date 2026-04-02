@@ -35,15 +35,15 @@
             HStack(spacing: 6) {
                 Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
                     .font(.caption2)
-                    .foregroundStyle(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundStyle(appSettings.effectiveColors.foregroundSecondary)
                     .frame(width: 12)
 
                 Image(systemName: "folder")
-                    .foregroundStyle(appSettings.theme.colors.accent)
+                    .foregroundStyle(appSettings.effectiveColors.accent)
 
                 Text(node.name)
                     .font(.callout)
-                    .foregroundStyle(appSettings.theme.colors.foreground)
+                    .foregroundStyle(appSettings.effectiveColors.foreground)
                     .lineLimit(1)
                     .truncationMode(.middle)
             }
@@ -80,11 +80,11 @@
                     .frame(width: 12)
 
                 Image(systemName: fileIconName)
-                    .foregroundStyle(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundStyle(appSettings.effectiveColors.foregroundSecondary)
 
                 Text(node.name)
                     .font(.callout)
-                    .foregroundStyle(appSettings.theme.colors.foreground)
+                    .foregroundStyle(appSettings.effectiveColors.foreground)
                     .lineLimit(1)
                     .truncationMode(.middle)
             }
@@ -92,7 +92,7 @@
             .padding(.trailing, 8)
             .padding(.vertical, 4)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(isSelected ? appSettings.theme.colors.foreground.opacity(0.1) : .clear)
+            .background(isSelected ? appSettings.effectiveColors.foreground.opacity(0.1) : .clear)
             .contentShape(Rectangle())
             .onTapGesture {
                 directoryState.selectFile(at: node.url)
@@ -106,7 +106,7 @@
 
                 Text("...")
                     .font(.callout)
-                    .foregroundStyle(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundStyle(appSettings.effectiveColors.foregroundSecondary)
             }
             .padding(.leading, CGFloat(node.depth - 1) * 16 + 12)
             .padding(.trailing, 8)

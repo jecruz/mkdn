@@ -17,7 +17,7 @@
         @State private var hasFailed = false
 
         private var colors: ThemeColors {
-            appSettings.theme.colors
+            appSettings.effectiveColors
         }
 
         var body: some View {

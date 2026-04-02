@@ -24,6 +24,7 @@ struct SwatchPickerView: View {
                             hex: hex,
                             style: .square,
                             isSelected: selection.customBackground == hex,
+                            size: 22,
                             action: {
                                 selection.customBackground = hex
                                 selection.builtInPaletteId = nil
@@ -33,7 +34,6 @@ struct SwatchPickerView: View {
                                 }
                             }
                         )
-                        .frame(width: 22, height: 22)
                     }
                 }
 
@@ -48,12 +48,12 @@ struct SwatchPickerView: View {
                             hex: hex,
                             style: .square,
                             isSelected: selection.customText == hex,
+                            size: 22,
                             action: {
                                 selection.customText = hex
                                 selection.builtInPaletteId = nil
                             }
                         )
-                        .frame(width: 22, height: 22)
                     }
                 }
             }

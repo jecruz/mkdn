@@ -28,6 +28,11 @@
         public var themeMode: ThemeMode {
             didSet {
                 UserDefaults.standard.set(themeMode.rawValue, forKey: themeModeKey)
+                effectiveColors = Self.resolveEffectiveColors(
+                    themeMode: themeMode,
+                    systemColorScheme: systemColorScheme,
+                    selection: userPaletteSelection
+                )
             }
         }
 
@@ -35,10 +40,17 @@
         /// Initialized from `NSApp.effectiveAppearance` to prevent a flash of wrong
         /// theme before the SwiftUI colorScheme bridge fires. Updated by the root
         /// view whenever the OS appearance changes.
-        public var systemColorScheme: ColorScheme
+        public var systemColorScheme: ColorScheme {
+            didSet {
+                effectiveColors = Self.resolveEffectiveColors(
+                    themeMode: themeMode,
+                    systemColorScheme: systemColorScheme,
+                    selection: userPaletteSelection
+                )
+            }
+        }
 
         /// Resolved color theme based on the user's mode preference and system appearance.
-        /// All views read this to obtain colors and syntax highlighting.
         public var theme: AppTheme {
             themeMode.resolved(for: systemColorScheme)
         }
@@ -50,64 +62,74 @@
         public var userPaletteSelection: UserPaletteSelection {
             didSet {
                 userPaletteSelection.save()
+                effectiveColors = Self.resolveEffectiveColors(
+                    themeMode: themeMode,
+                    systemColorScheme: systemColorScheme,
+                    selection: userPaletteSelection
+                )
             }
         }
 
-        /// Theme colors with custom palette applied.
-        /// Returns custom colors when the user is mixing independently,
-        /// otherwise returns nil (built-in AppTheme is used directly).
-        public var customColors: ThemeColors? {
-            guard userPaletteSelection.isCustomMixing,
-                  let bg = userPaletteSelection.customBackground,
-                  let fg = userPaletteSelection.customText
-            else { return nil }
-
-            let bgColor = Color(hex: bg)
-            let fgColor = Color(hex: fg)
-
-            return ThemeColors(
-                background: bgColor,
-                backgroundSecondary: bgColor.opacity(0.85),
-                foreground: fgColor,
-                foregroundSecondary: fgColor.opacity(0.7),
-                accent: fgColor.opacity(0.6),
-                border: fgColor.opacity(0.2),
-                codeBackground: bgColor.opacity(0.6),
-                codeForeground: fgColor,
-                linkColor: fgColor.opacity(0.8),
-                headingColor: fgColor,
-                blockquoteBorder: fgColor.opacity(0.4),
-                blockquoteBackground: bgColor.opacity(0.5),
-                findHighlight: fgColor.opacity(0.6)
-            )
-        }
-
-        /// Theme colors derived from the selected built-in palette.
-        public var builtInPaletteColors: ThemeColors? {
-            guard let palette = userPaletteSelection.builtInPalette else { return nil }
-            let bg = Color(hex: palette.background)
-            let fg = Color(hex: palette.text)
-            let accent = Color(hex: palette.accent)
-            return ThemeColors(
-                background: bg,
-                backgroundSecondary: bg.opacity(0.85),
-                foreground: fg,
-                foregroundSecondary: fg.opacity(0.7),
-                accent: accent,
-                border: fg.opacity(0.2),
-                codeBackground: bg.opacity(0.6),
-                codeForeground: fg,
-                linkColor: accent,
-                headingColor: fg,
-                blockquoteBorder: fg.opacity(0.4),
-                blockquoteBackground: bg.opacity(0.5),
-                findHighlight: accent
-            )
-        }
-
         /// Effective theme colors: built-in palette > custom mix > theme default.
-        public var effectiveColors: ThemeColors {
-            builtInPaletteColors ?? customColors ?? theme.colors
+        /// Stored so that @Observable can track it and trigger view updates.
+        public var effectiveColors: ThemeColors
+
+        /// Resolves the effective colors from inputs. Pure function used by didSet observers.
+        private static func resolveEffectiveColors(
+            themeMode: ThemeMode,
+            systemColorScheme: ColorScheme,
+            selection: UserPaletteSelection
+        ) -> ThemeColors {
+            let theme = themeMode.resolved(for: systemColorScheme)
+
+            // Built-in palette takes priority.
+            if let palette = selection.builtInPalette {
+                let bg = Color(hex: palette.background)
+                let fg = Color(hex: palette.text)
+                let accent = Color(hex: palette.accent)
+                return ThemeColors(
+                    background: bg,
+                    backgroundSecondary: bg.opacity(0.85),
+                    foreground: fg,
+                    foregroundSecondary: fg.opacity(0.7),
+                    accent: accent,
+                    border: fg.opacity(0.2),
+                    codeBackground: bg.opacity(0.6),
+                    codeForeground: fg,
+                    linkColor: accent,
+                    headingColor: fg,
+                    blockquoteBorder: fg.opacity(0.4),
+                    blockquoteBackground: bg.opacity(0.5),
+                    findHighlight: accent
+                )
+            }
+
+            // Custom mix is second.
+            if selection.isCustomMixing,
+               let bg = selection.customBackground,
+               let fg = selection.customText
+            {
+                let bgColor = Color(hex: bg)
+                let fgColor = Color(hex: fg)
+                return ThemeColors(
+                    background: bgColor,
+                    backgroundSecondary: bgColor.opacity(0.85),
+                    foreground: fgColor,
+                    foregroundSecondary: fgColor.opacity(0.7),
+                    accent: fgColor.opacity(0.6),
+                    border: fgColor.opacity(0.2),
+                    codeBackground: bgColor.opacity(0.6),
+                    codeForeground: fgColor,
+                    linkColor: fgColor.opacity(0.8),
+                    headingColor: fgColor,
+                    blockquoteBorder: fgColor.opacity(0.4),
+                    blockquoteBackground: bgColor.opacity(0.5),
+                    findHighlight: fgColor.opacity(0.6)
+                )
+            }
+
+            // Fall back to theme default.
+            return theme.colors
         }
 
         // MARK: - Default Handler Hint
@@ -162,18 +184,22 @@
         public init() {
             let appearance = NSApp?.effectiveAppearance ?? NSAppearance.currentDrawing()
             let isDark = appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-            systemColorScheme = isDark ? .dark : .light
+            let resolvedScheme: ColorScheme = isDark ? .dark : .light
+            systemColorScheme = resolvedScheme
 
+            let resolvedMode: ThemeMode
             if let raw = UserDefaults.standard.string(forKey: themeModeKey),
                let mode = ThemeMode(rawValue: raw)
             {
-                themeMode = mode
+                resolvedMode = mode
             } else {
-                themeMode = .auto
+                resolvedMode = .auto
             }
+            themeMode = resolvedMode
 
             hasShownDefaultHandlerHint = UserDefaults.standard.bool(forKey: hasShownDefaultHandlerHintKey)
-            userPaletteSelection = UserPaletteSelection.load()
+            let resolvedSelection = UserPaletteSelection.load()
+            userPaletteSelection = resolvedSelection
             autoReloadEnabled = UserDefaults.standard.bool(forKey: autoReloadEnabledKey)
 
             let storedScale = CGFloat(UserDefaults.standard.double(forKey: scaleFactorKey))
@@ -184,6 +210,12 @@
 
             let storedHeight = CGFloat(UserDefaults.standard.double(forKey: windowHeightKey))
             windowHeight = storedHeight > 0 ? storedHeight : 600
+
+            effectiveColors = Self.resolveEffectiveColors(
+                themeMode: resolvedMode,
+                systemColorScheme: resolvedScheme,
+                selection: resolvedSelection
+            )
         }
 
         // MARK: - Methods

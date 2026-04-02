@@ -15,11 +15,11 @@
             VStack(spacing: 20) {
                 Image(systemName: isDirectoryMode ? "sidebar.left" : "doc.richtext")
                     .font(.system(size: 64))
-                    .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
 
                 Text("mkdn")
                     .font(.system(size: 36, weight: .bold, design: .monospaced))
-                    .foregroundColor(appSettings.theme.colors.headingColor)
+                    .foregroundColor(appSettings.effectiveColors.headingColor)
 
                 Text(
                     isDirectoryMode
@@ -27,7 +27,7 @@
                         : "Open a Markdown file to get started"
                 )
                 .font(.body)
-                .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
 
                 if !isDirectoryMode {
                     VStack(alignment: .leading, spacing: 8) {
@@ -48,17 +48,17 @@
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(appSettings.theme.colors.background)
+            .background(appSettings.effectiveColors.background)
         }
 
         private func instructionRow(icon: String, text: String) -> some View {
             HStack(spacing: 12) {
                 Image(systemName: icon)
                     .frame(width: 20)
-                    .foregroundColor(appSettings.theme.colors.accent)
+                    .foregroundColor(appSettings.effectiveColors.accent)
                 Text(text)
                     .font(.callout)
-                    .foregroundColor(appSettings.theme.colors.foreground)
+                    .foregroundColor(appSettings.effectiveColors.foreground)
             }
         }
     }

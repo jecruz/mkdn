@@ -9,7 +9,7 @@
         @Environment(AppSettings.self) private var appSettings
 
         private var colors: ThemeColors {
-            appSettings.theme.colors
+            appSettings.effectiveColors
         }
 
         var body: some View {

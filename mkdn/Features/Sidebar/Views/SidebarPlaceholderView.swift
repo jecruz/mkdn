@@ -21,11 +21,11 @@
                     Text("Set Work Directory")
                         .font(.callout)
                 }
-                .foregroundStyle(appSettings.theme.colors.foregroundSecondary)
+                .foregroundStyle(appSettings.effectiveColors.foregroundSecondary)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .buttonStyle(.plain)
-            .background(appSettings.theme.colors.backgroundSecondary)
+            .background(appSettings.effectiveColors.backgroundSecondary)
         }
 
         @MainActor

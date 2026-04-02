@@ -94,7 +94,7 @@
                     overlayGeneration += 1
                 }
             }
-            .background(appSettings.theme.colors.backgroundSecondary)
+            .background(appSettings.effectiveColors.backgroundSecondary)
             .environment(\.isDirectoryMode, directoryState != nil)
             .animation(motion.resolved(.sidebarSlide), value: documentState.isSidebarVisible)
             .animation(motion.resolved(.sidebarSlide), value: documentState.sidebarWidth)
@@ -111,6 +111,12 @@
                 setupDirectoryState(rootURL: url)
             }
             .modifier(OptionalDirectoryEnvironment(directoryState: directoryState))
+            .popover(
+                isPresented: Bindable(appSettings).showColorPalettePopover,
+                arrowEdge: .bottom
+            ) {
+                ColorPalettePopover(isOpen: Bindable(appSettings).showColorPalettePopover)
+            }
             .opacity(isReady ? 1 : 0)
             .onAppear {
                 handleLaunch()

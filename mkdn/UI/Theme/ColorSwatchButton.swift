@@ -24,9 +24,17 @@ struct ColorSwatchButton: View {
     let hex: String
     let style: SwatchStyle
     let isSelected: Bool
+    let size: CGFloat
     let action: () -> Void
 
-    private let swatchSize: CGFloat = 32
+    init(hex: String, style: SwatchStyle, isSelected: Bool, size: CGFloat = 32, action: @escaping () -> Void) {
+        self.hex = hex
+        self.style = style
+        self.isSelected = isSelected
+        self.size = size
+        self.action = action
+    }
+
     private let selectedScale: CGFloat = 1.1
     private let borderWidth: CGFloat = 1
     private let selectedStrokeWidth: CGFloat = 3
@@ -64,7 +72,7 @@ struct ColorSwatchButton: View {
                         .stroke(.white, lineWidth: selectedStrokeWidth)
                 }
             }
-            .frame(width: swatchSize, height: swatchSize)
+            .frame(width: size, height: size)
     }
 
     private var squareSwatch: some View {
@@ -80,7 +88,7 @@ struct ColorSwatchButton: View {
                         .stroke(.white, lineWidth: selectedStrokeWidth)
                 }
             }
-            .frame(width: swatchSize, height: swatchSize)
+            .frame(width: size, height: size)
     }
 }
 

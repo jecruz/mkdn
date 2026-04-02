@@ -19,14 +19,15 @@ struct PaletteGridView: View {
                         ColorSwatchButton(
                             hex: palette.background,
                             style: .circle,
-                            isSelected: selection.builtInPaletteId == palette.name,
+                            isSelected: selection.builtInPaletteId == palette.id,
+                            size: 24,
                             action: {
-                                selection.builtInPaletteId = palette.name
+                                selection.builtInPaletteId = palette.id
                                 selection.customBackground = nil
                                 selection.customText = nil
                             }
                         )
-                        .frame(width: 32, height: 32)
+                        .frame(width: 24, height: 24)
                         .overlay {
                             Text(palette.name)
                                 .font(.system(size: 9))

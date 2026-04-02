@@ -199,7 +199,7 @@
         // MARK: - Theme
 
         private func applyTheme(to textView: NSTextView, scrollView: NSScrollView) {
-            let colors = appSettings.theme.colors
+            let colors = appSettings.effectiveColors
             let bgColor = PlatformTypeConverter.color(from: colors.background)
             let accentColor = PlatformTypeConverter.color(from: colors.accent)
 

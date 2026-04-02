@@ -179,7 +179,7 @@
                     Button("Color Palette\u{2026}") {
                         appSettings.showColorPalettePopover = true
                     }
-                    .keyboardShortcut("p", modifiers: [.command, .shift])
+                    .keyboardShortcut("k", modifiers: [.command, .shift])
                 }
 
                 Section {

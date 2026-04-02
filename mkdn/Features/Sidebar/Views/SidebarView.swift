@@ -30,7 +30,7 @@
                     SidebarEmptyView()
                 }
             }
-            .background(appSettings.theme.colors.backgroundSecondary)
+            .background(appSettings.effectiveColors.backgroundSecondary)
         }
 
         // MARK: - Tree Flattening

@@ -13,10 +13,10 @@
         var body: some View {
             HStack(spacing: 8) {
                 Image(systemName: "folder")
-                    .foregroundStyle(appSettings.theme.colors.accent)
+                    .foregroundStyle(appSettings.effectiveColors.accent)
                 Text(directoryState.rootURL.lastPathComponent)
                     .font(.headline)
-                    .foregroundStyle(appSettings.theme.colors.headingColor)
+                    .foregroundStyle(appSettings.effectiveColors.headingColor)
                     .lineLimit(1)
                     .truncationMode(.middle)
             }

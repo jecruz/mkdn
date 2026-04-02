@@ -13,16 +13,16 @@
         var body: some View {
             TextEditor(text: $text)
                 .font(.system(.body, design: .monospaced))
-                .foregroundColor(appSettings.theme.colors.foreground)
+                .foregroundColor(appSettings.effectiveColors.foreground)
                 .scrollContentBackground(.hidden)
-                .background(appSettings.theme.colors.background)
+                .background(appSettings.effectiveColors.background)
                 .focused($isFocused)
                 .focusEffectDisabled()
                 .padding(8)
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(
-                            appSettings.theme.colors.accent.opacity(isFocused ? 0.3 : 0),
+                            appSettings.effectiveColors.accent.opacity(isFocused ? 0.3 : 0),
                             lineWidth: 1.5
                         )
                 )

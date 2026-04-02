@@ -1,0 +1,48 @@
+2026-04-02 15:03:11.775 [info]: MCP Server started successfully {"name":"LMStudio","version":"1.0.0","lmStudioUrl":"http://10.0.0.30:4521"}
+2026-04-02 15:03:11.780 [info]: Available tools: generate_docs, summarize, extract_tags, analyze_code, refactor_suggestions, generate_tests, process_markdown, summarize_markdown, tag_markdown, analyze_markdown
+2026-04-02 15:03:11.799 [warn]: Port 9090 already in use, health endpoint disabled
+2026-04-02 15:03:11.852 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:03:11.853 [info]: Listing available tools
+2026-04-02 15:03:17.904 [info]: Received SIGINT, starting graceful shutdown
+2026-04-02 15:09:20.389 [info]: MCP Server started successfully {"name":"LMStudio","version":"1.0.0","lmStudioUrl":"http://10.0.0.30:4521"}
+2026-04-02 15:09:20.396 [info]: Available tools: generate_docs, summarize, extract_tags, analyze_code, refactor_suggestions, generate_tests, process_markdown, summarize_markdown, tag_markdown, analyze_markdown
+2026-04-02 15:09:20.432 [warn]: Port 9090 already in use, health endpoint disabled
+2026-04-02 15:09:20.441 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:09:22.464 [info]: Listing available tools
+2026-04-02 15:10:20.813 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:11:20.760 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:12:20.674 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:13:20.929 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:14:20.896 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:15:21.019 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:16:21.017 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:17:21.615 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:18:21.505 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:19:21.381 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:20:21.322 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:21:21.712 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:22:21.336 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:23:21.335 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:24:21.335 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:25:21.336 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:26:21.335 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:27:21.336 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:28:21.338 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:29:21.339 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:30:21.340 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:31:21.341 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:32:21.342 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:33:21.345 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:34:21.343 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:35:21.345 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:36:21.346 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:37:21.351 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:38:21.351 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:39:21.353 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:40:21.352 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:41:21.355 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:42:21.355 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:43:21.355 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:44:21.759 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:45:22.158 [error]: LM Studio health check failed {"error":{"cause":{}}}
+2026-04-02 15:45:52.587 [info]: Received SIGINT, starting graceful shutdown
