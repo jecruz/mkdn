@@ -2,48 +2,37 @@
     import AppKit
     import SwiftUI
 
-    /// A plain-text Markdown editor using `LintAwareEditorView`.
+    /// Main editor view for Markdown content.
     ///
-    /// Displays a subtle theme-accent border when focused and suppresses
-    /// the default system focus ring for a polished appearance. Shows a
-    /// lint badge in the top-right corner when issues are detected, and
-    /// renders dashed yellow underlines beneath flagged text.
+    /// Provides a syntax-highlighted text editor with live linting feedback.
+    /// Uses @FocusState for managing keyboard focus and responds to changes
+    /// in document text and styling settings.
     struct MarkdownEditorView: View {
         @Binding var text: String
-        @Environment(AppSettings.self) private var appSettings
         @Environment(DocumentState.self) private var documentState
+        @Environment(AppSettings.self) private var appSettings
         @FocusState private var isFocused: Bool
 
         var body: some View {
-            VStack(spacing: 0) {
-                HStack {
-                    Spacer()
-                    LintBadgeView(count: documentState.lintIssues.count)
-                }
-                .padding(.horizontal, 8)
-                .padding(.top, 4)
-
-                LintAwareEditorView(
+            ZStack(alignment: .topTrailing) {
+                MarkdownNativeEditor(
                     text: $text,
                     lintIssues: documentState.lintIssues,
-                    font: .monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .regular),
-                    foregroundColor: PlatformTypeConverter.nsColor(from: appSettings.effectiveColors.foreground),
-                    backgroundColor: PlatformTypeConverter.nsColor(from: appSettings.effectiveColors.background)
+                    font: PlatformTypeConverter.monospacedFont(),
+                    foregroundColor: PlatformTypeConverter.color(from: appSettings.effectiveColors.foreground),
+                    backgroundColor: PlatformTypeConverter.color(from: appSettings.effectiveColors.background)
                 )
                 .focused($isFocused)
                 .focusEffectDisabled()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(
-                            appSettings.effectiveColors.accent.opacity(isFocused ? 0.3 : 0),
-                            lineWidth: 1.5
-                        )
-                )
-                .animation(AnimationConstants.quickShift, value: isFocused)
-                .onChange(of: text) {
-                    documentState.scheduleLint()
+
+                if !documentState.lintIssues.isEmpty {
+                    LinterBadge(count: documentState.lintIssues.count)
+                        .padding(12)
                 }
-                .background(appSettings.effectiveColors.background)
+            }
+            .background(appSettings.effectiveColors.background)
+            .onAppear {
+                isFocused = true
             }
         }
     }

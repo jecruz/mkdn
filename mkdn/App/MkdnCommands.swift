@@ -52,7 +52,7 @@
                         id: \.self
                     ) { url in
                         Button(url.lastPathComponent) {
-                            FileOpenCoordinator.shared.pendingURLs.append(url)
+                            FileOpenService.shared.openFileWindow?(url)
                         }
                     }
                     Divider()
@@ -282,13 +282,13 @@
                 if documentState?.currentFileURL == nil {
                     // Welcome screen or no windows: close splash, open new document
                     let window = NSApplication.shared.keyWindow
-                    FileOpenCoordinator.shared.openWindowHandler?(newFileURL)
+                    FileOpenService.shared.openFileWindow?(newFileURL)
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         window?.close()
                     }
                 } else {
                     // File already open: open in new window
-                    FileOpenCoordinator.shared.pendingURLs.append(newFileURL)
+                    FileOpenService.shared.openFileWindow?(newFileURL)
                 }
             } catch {
                 print("Failed to create new markdown file: \(error)")
