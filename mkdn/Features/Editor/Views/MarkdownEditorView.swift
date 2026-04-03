@@ -15,7 +15,7 @@
 
         var body: some View {
             ZStack(alignment: .topTrailing) {
-                MarkdownNativeEditor(
+                LintAwareEditorView(
                     text: $text,
                     lintIssues: documentState.lintIssues,
                     font: PlatformTypeConverter.monospacedFont(),
@@ -23,10 +23,9 @@
                     backgroundColor: PlatformTypeConverter.color(from: appSettings.effectiveColors.background)
                 )
                 .focused($isFocused)
-                .focusEffectDisabled()
 
                 if !documentState.lintIssues.isEmpty {
-                    LinterBadge(count: documentState.lintIssues.count)
+                    LintBadgeView(count: documentState.lintIssues.count)
                         .padding(12)
                 }
             }
