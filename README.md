@@ -39,14 +39,17 @@ Everything agents produce:
 
 ## Features
 
-- Solarized Dark / Light themes (auto-follows system, or pinned)
+- **Live Markdown Linter** — syntax-aware warnings with inline hover tooltips right in the editor
+- **Custom Color Palettes** — select built-in UI themes (Solarized, etc.) or mix your own hex-based colors from a floating inspector
+- **Clean Auxiliary Windows** — native AppKit Help and Markdown Guide windows that stay out of your main window menu
 - Staggered entrance animations — content cascades in on load and file switch
 - Find in page (Cmd+F, Cmd+G / Cmd+Shift+G to navigate)
 - Side-by-side editor with live preview
-- Zoom (Cmd+/-, persists across sessions)
+- Zoom (Cmd+Plus/Cmd+Minus, persists across sessions)
 - File watching — kernel-level DispatchSource, breathing orb on change
 - Chrome-less window — no title bar, no traffic lights
 - Directory browsing with sidebar (Cmd+Shift+L to toggle)
+- Outline Navigation (Cmd+J)
 - Print (Cmd+P)
 
 ## Keyboard shortcuts
@@ -60,7 +63,9 @@ Everything agents produce:
 | Cmd+R | Reload from disk |
 | Cmd+1 | Preview mode |
 | Cmd+2 | Edit mode |
-| Cmd+Shift+T | Cycle theme |
+| Cmd+Shift+T | Cycle theme mode (Auto/Dark/Light) |
+| Cmd+Shift+K | Open Color Palette |
+| Cmd+J | Document Outline |
 | Cmd+F | Find in page |
 | Cmd+G | Next match |
 | Cmd+Shift+G | Previous match |
@@ -71,6 +76,8 @@ Everything agents produce:
 | Cmd+Shift+L | Toggle sidebar |
 | Cmd+Shift+O | Open directory |
 | Cmd+P | Print |
+| Cmd+? | mkdn Help |
+| Cmd+Shift+M | Markdown Guide |
 
 ## Architecture
 
