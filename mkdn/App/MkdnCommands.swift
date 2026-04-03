@@ -1,6 +1,12 @@
 #if os(macOS)
     import SwiftUI
     import UniformTypeIdentifiers
+    import Combine
+
+    extension Notification.Name {
+        static let openHelpWindow = Notification.Name("openHelpWindow")
+        static let openMarkdownGuide = Notification.Name("openMarkdownGuide")
+    }
 
     /// Application menu commands.
     ///
@@ -26,23 +32,52 @@
                 }
             }
 
-            CommandGroup(after: .appInfo) {
-                Button("Set as Default Markdown App") {
-                    let success = DefaultHandlerService.registerAsDefault()
-                    if success {
-                        documentState?.modeOverlayLabel = "Default Markdown App Set"
-                    } else {
-                        documentState?.modeOverlayLabel = "Could not set default — install mkdn.app first"
-                    }
+            CommandGroup(replacing: .newItem) {
+                Button("New Markdown") {
+                    createNewMarkdownFile()
                 }
-                .disabled(!DefaultHandlerService.canRegisterAsDefault)
-            }
+                .keyboardShortcut("n", modifiers: .command)
 
-            CommandGroup(after: .newItem) {
-                Button("Close") {
-                    NSApp.keyWindow?.close()
+                Button("Close Window") {
+                    NSApplication.shared.keyWindow?.close()
                 }
                 .keyboardShortcut("w", modifiers: .command)
+                .disabled(NSApplication.shared.keyWindow == nil)
+
+                Divider()
+
+                Menu("Open Recent") {
+                    ForEach(
+                        NSDocumentController.shared.recentDocumentURLs,
+                        id: \.self
+                    ) { url in
+                        Button(url.lastPathComponent) {
+                            FileOpenCoordinator.shared.pendingURLs.append(url)
+                        }
+                    }
+                    Divider()
+                    Button("Clear Menu") {
+                        NSDocumentController.shared.clearRecentDocuments(nil)
+                    }
+                }
+
+                Divider()
+
+                Button("Open...") {
+                    openFile()
+                }
+                .keyboardShortcut("o", modifiers: .command)
+                
+                Button("Open Directory...") {
+                    openDirectory()
+                }
+                .keyboardShortcut("O", modifiers: [.command, .shift])
+
+                Button("Reload") {
+                    try? documentState?.reloadFile()
+                }
+                .keyboardShortcut("r", modifiers: .command)
+                .disabled(documentState?.currentFileURL == nil || documentState?.isFileOutdated != true)
             }
 
             CommandGroup(replacing: .saveItem) {
@@ -89,40 +124,6 @@
                     }
                 }
                 .keyboardShortcut("e", modifiers: .command)
-            }
-
-            CommandGroup(replacing: .printItem) {
-                Button("Page Setup...") {
-                    NSApp.sendAction(
-                        #selector(NSDocument.runPageLayout(_:)),
-                        to: nil,
-                        from: nil
-                    )
-                }
-                .keyboardShortcut("P", modifiers: [.command, .shift])
-
-                Button("Print...") {
-                    Self.findTextView()?.printView(nil)
-                }
-                .keyboardShortcut("p", modifiers: .command)
-            }
-
-            CommandGroup(after: .importExport) {
-                Button("Open...") {
-                    openFile()
-                }
-                .keyboardShortcut("o", modifiers: .command)
-
-                Button("Open Directory...") {
-                    openDirectory()
-                }
-                .keyboardShortcut("O", modifiers: [.command, .shift])
-
-                Button("Reload") {
-                    try? documentState?.reloadFile()
-                }
-                .keyboardShortcut("r", modifiers: .command)
-                .disabled(documentState?.currentFileURL == nil || documentState?.isFileOutdated != true)
             }
 
             CommandGroup(after: .toolbar) {
@@ -190,6 +191,20 @@
                     .disabled(outlineState?.headingTree.isEmpty ?? true)
                 }
             }
+
+            CommandGroup(replacing: .help) {
+                Button("mkdn Help") {
+                    NotificationCenter.default.post(name: .openHelpWindow, object: nil)
+                }
+                .keyboardShortcut("?", modifiers: .command)
+
+                Divider()
+
+                Button("Markdown Guide") {
+                    NotificationCenter.default.post(name: .openMarkdownGuide, object: nil)
+                }
+                .keyboardShortcut("m", modifiers: [.command, .shift])
+            }
         }
 
         @MainActor
@@ -254,6 +269,30 @@
 
             guard panel.runModal() == .OK, let url = panel.url else { return }
             try? documentState?.loadFile(at: url)
+        }
+
+        @MainActor
+        private func createNewMarkdownFile() {
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let timestamp = ISO8601DateFormatter().string(from: Date()).replacingOccurrences(of: ":", with: "-")
+            let newFileURL = documentsURL.appendingPathComponent("Untitled-\(timestamp).md")
+
+            do {
+                try "# New Document\n\n".write(to: newFileURL, atomically: true, encoding: .utf8)
+                if documentState?.currentFileURL == nil {
+                    // Welcome screen or no windows: close splash, open new document
+                    let window = NSApplication.shared.keyWindow
+                    FileOpenCoordinator.shared.openWindowHandler?(newFileURL)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        window?.close()
+                    }
+                } else {
+                    // File already open: open in new window
+                    FileOpenCoordinator.shared.pendingURLs.append(newFileURL)
+                }
+            } catch {
+                print("Failed to create new markdown file: \(error)")
+            }
         }
     }
 #endif

@@ -1,0 +1,101 @@
+<h2>mkdn Help Window Mockup</h2>
+<p class="subtitle">Example of an in-app help window — this is what users would see from Help menu</p>
+
+<div class="mockup">
+  <div class="mockup-header">mkdn Help</div>
+  <div class="mockup-body" style="background: #1a2332; color: #c8d0d8; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif; padding: 0; min-height: 500px; display: flex;">
+
+    <!-- Sidebar -->
+    <div style="width: 180px; background: #141c28; padding: 16px 12px; border-right: 1px solid #2a3545; flex-shrink: 0;">
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6b7a8d; margin-bottom: 10px; font-weight: 600;">Sections</div>
+      <div style="padding: 6px 10px; background: #1e3a5f; border-radius: 6px; color: #7ec8e3; font-size: 13px; margin-bottom: 4px; cursor: pointer;">Shortcuts</div>
+      <div style="padding: 6px 10px; color: #8a95a5; font-size: 13px; margin-bottom: 4px; cursor: pointer; border-radius: 6px;">Features</div>
+      <div style="padding: 6px 10px; color: #8a95a5; font-size: 13px; margin-bottom: 4px; cursor: pointer; border-radius: 6px;">Markdown</div>
+      <div style="padding: 6px 10px; color: #8a95a5; font-size: 13px; margin-bottom: 4px; cursor: pointer; border-radius: 6px;">CLI Usage</div>
+      <div style="padding: 6px 10px; color: #8a95a5; font-size: 13px; cursor: pointer; border-radius: 6px;">About</div>
+    </div>
+
+    <!-- Content -->
+    <div style="flex: 1; padding: 24px 28px; overflow-y: auto;">
+      <h3 style="color: #e8c86e; font-size: 18px; margin: 0 0 4px 0; font-weight: 600;">Keyboard Shortcuts</h3>
+      <p style="color: #6b7a8d; font-size: 12px; margin: 0 0 20px 0;">Quick reference for all available shortcuts</p>
+
+      <!-- File Section -->
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6b7a8d; margin-bottom: 8px; font-weight: 600;">File</div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">New Markdown</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘N</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">Open...</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘O</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">Close Window</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘W</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">Save</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘S</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">Save As...</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⇧⌘S</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0;">
+          <span style="color: #c8d0d8; font-size: 13px;">Reload</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘R</span>
+        </div>
+      </div>
+
+      <!-- View Section -->
+      <div style="margin-bottom: 20px;">
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6b7a8d; margin-bottom: 8px; font-weight: 600;">View</div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">Preview Mode</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘1</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">Edit Mode</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘2</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">Cycle Theme</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘T</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">Zoom In / Out</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘+ / ⌘−</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0;">
+          <span style="color: #c8d0d8; font-size: 13px;">Actual Size</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘0</span>
+        </div>
+      </div>
+
+      <!-- Find Section -->
+      <div>
+        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6b7a8d; margin-bottom: 8px; font-weight: 600;">Find</div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">Find...</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘F</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #232f3e;">
+          <span style="color: #c8d0d8; font-size: 13px;">Find Next / Previous</span>
+          <span style="color: #7ec8e3; font-size: 12px; font-family: 'SF Mono', monospace; background: #1e2d3d; padding: 2px 8px; border-radius: 4px;">⌘G / ⇧⌘G</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 24px; padding: 16px 20px; background: rgba(126, 200, 227, 0.08); border: 1px solid rgba(126, 200, 227, 0.15); border-radius: 8px;">
+  <h3 style="margin: 0 0 8px 0; font-size: 14px;">What this mockup shows</h3>
+  <ul style="margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.6;">
+    <li><strong>Sidebar navigation</strong> — Shortcuts, Features, Markdown, CLI Usage, About</li>
+    <li><strong>Themed to match mkdn</strong> — dark palette, accent colors from app themes</li>
+    <li><strong>Native SwiftUI window</strong> — would be a proper macOS sheet or panel</li>
+    <li><strong>Grouped shortcuts</strong> — File, View, Find categories</li>
+  </ul>
+</div>

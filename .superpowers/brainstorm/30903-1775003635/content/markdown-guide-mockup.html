@@ -1,0 +1,116 @@
+<h2>Markdown Guide Window Mockup</h2>
+<p class="subtitle">A read-only reference window users can keep open while editing</p>
+
+<div class="split">
+  <!-- Left half: the guide window -->
+  <div class="mockup" style="flex: 3;">
+    <div class="mockup-header">Markdown Guide</div>
+    <div class="mockup-body" style="background: #1a2332; color: #c8d0d8; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif; padding: 0; min-height: 580px; display: flex;">
+
+      <!-- Sidebar -->
+      <div style="width: 150px; background: #141c28; padding: 14px 10px; border-right: 1px solid #2a3545; flex-shrink: 0; font-size: 12px;">
+        <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7a8d; margin-bottom: 8px; font-weight: 600;">Syntax</div>
+        <div style="padding: 5px 8px; background: #1e3a5f; border-radius: 5px; color: #7ec8e3; margin-bottom: 3px; cursor: pointer;">Headings</div>
+        <div style="padding: 5px 8px; color: #8a95a5; margin-bottom: 3px; cursor: pointer; border-radius: 5px;">Text Styling</div>
+        <div style="padding: 5px 8px; color: #8a95a5; margin-bottom: 3px; cursor: pointer; border-radius: 5px;">Links & Images</div>
+        <div style="padding: 5px 8px; color: #8a95a5; margin-bottom: 3px; cursor: pointer; border-radius: 5px;">Lists</div>
+        <div style="padding: 5px 8px; color: #8a95a5; margin-bottom: 3px; cursor: pointer; border-radius: 5px;">Code</div>
+        <div style="padding: 5px 8px; color: #8a95a5; margin-bottom: 3px; cursor: pointer; border-radius: 5px;">Blockquotes</div>
+        <div style="padding: 5px 8px; color: #8a95a5; margin-bottom: 3px; cursor: pointer; border-radius: 5px;">Tables</div>
+        <div style="padding: 5px 8px; color: #8a95a5; margin-bottom: 3px; cursor: pointer; border-radius: 5px;">Horizontal Rules</div>
+        <div style="padding: 5px 8px; color: #8a95a5; margin-bottom: 3px; cursor: pointer; border-radius: 5px;">Task Lists</div>
+        <div style="padding: 5px 8px; color: #8a95a5; cursor: pointer; border-radius: 5px;">Mermaid</div>
+      </div>
+
+      <!-- Content -->
+      <div style="flex: 1; padding: 20px 24px; overflow-y: auto;">
+        <h3 style="color: #e8c86e; font-size: 16px; margin: 0 0 4px 0; font-weight: 600;">Headings</h3>
+        <p style="color: #6b7a8d; font-size: 11px; margin: 0 0 16px 0;">Use # symbols to create headings. More #'s = smaller heading.</p>
+
+        <!-- Example block: syntax + result side by side -->
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+          <div style="flex: 1; background: #141c28; border-radius: 6px; padding: 12px 14px; border: 1px solid #2a3545;">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7a8d; margin-bottom: 8px; font-weight: 600;">Syntax</div>
+            <pre style="font-family: 'SF Mono', Menlo, monospace; font-size: 12px; color: #8ac6d1; margin: 0; line-height: 1.7;"><span style="color: #e8c86e;">#</span> Heading 1
+<span style="color: #e8c86e;">##</span> Heading 2
+<span style="color: #e8c86e;">###</span> Heading 3
+<span style="color: #e8c86e;">####</span> Heading 4</pre>
+          </div>
+          <div style="flex: 1; background: #141c28; border-radius: 6px; padding: 12px 14px; border: 1px solid #2a3545;">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7a8d; margin-bottom: 8px; font-weight: 600;">Result</div>
+            <div style="color: #e8c86e; font-size: 22px; font-weight: 700; margin-bottom: 4px;">Heading 1</div>
+            <div style="color: #e8c86e; font-size: 18px; font-weight: 600; margin-bottom: 4px;">Heading 2</div>
+            <div style="color: #e8c86e; font-size: 15px; font-weight: 600; margin-bottom: 4px;">Heading 3</div>
+            <div style="color: #c8d0d8; font-size: 13px; font-weight: 600;">Heading 4</div>
+          </div>
+        </div>
+
+        <!-- Text Styling preview -->
+        <h3 style="color: #e8c86e; font-size: 16px; margin: 20px 0 4px 0; font-weight: 600;">Text Styling</h3>
+        <p style="color: #6b7a8d; font-size: 11px; margin: 0 0 16px 0;">Emphasis, strong, strikethrough, and inline code.</p>
+
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+          <div style="flex: 1; background: #141c28; border-radius: 6px; padding: 12px 14px; border: 1px solid #2a3545;">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7a8d; margin-bottom: 8px; font-weight: 600;">Syntax</div>
+            <pre style="font-family: 'SF Mono', Menlo, monospace; font-size: 12px; color: #8ac6d1; margin: 0; line-height: 1.9;"><span style="color: #e8c86e;">*</span>italic<span style="color: #e8c86e;">*</span>
+<span style="color: #e8c86e;">**</span>bold<span style="color: #e8c86e;">**</span>
+<span style="color: #e8c86e;">***</span>bold italic<span style="color: #e8c86e;">***</span>
+<span style="color: #e8c86e;">~~</span>strikethrough<span style="color: #e8c86e;">~~</span>
+<span style="color: #e8c86e;">`</span>inline code<span style="color: #e8c86e;">`</span></pre>
+          </div>
+          <div style="flex: 1; background: #141c28; border-radius: 6px; padding: 12px 14px; border: 1px solid #2a3545;">
+            <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7a8d; margin-bottom: 8px; font-weight: 600;">Result</div>
+            <div style="font-size: 13px; line-height: 1.9;">
+              <div><em style="color: #c8d0d8;">italic</em></div>
+              <div><strong style="color: #c8d0d8;">bold</strong></div>
+              <div><strong><em style="color: #c8d0d8;">bold italic</em></strong></div>
+              <div><del style="color: #8a95a5;">strikethrough</del></div>
+              <div><code style="background: #1e2d3d; padding: 2px 6px; border-radius: 3px; color: #e8c86e; font-family: 'SF Mono', monospace; font-size: 12px;">inline code</code></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code blocks -->
+        <h3 style="color: #e8c86e; font-size: 16px; margin: 20px 0 4px 0; font-weight: 600;">Code Blocks</h3>
+        <p style="color: #6b7a8d; font-size: 11px; margin: 0 0 16px 0;">Fenced code blocks with optional language for syntax highlighting.</p>
+
+        <div style="background: #141c28; border-radius: 6px; padding: 12px 14px; border: 1px solid #2a3545;">
+          <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7a8d; margin-bottom: 8px; font-weight: 600;">Syntax</div>
+          <pre style="font-family: 'SF Mono', Menlo, monospace; font-size: 12px; color: #8ac6d1; margin: 0; line-height: 1.6;"><span style="color: #e8c86e;">```swift</span>
+<span style="color: #cc7832;">let</span> greeting = <span style="color: #6a8759;">"Hello, World!"</span>
+<span style="color: #cc7832;">print</span>(greeting)
+<span style="color: #e8c86e;">```</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right half: context showing it alongside editor -->
+  <div class="mockup" style="flex: 2;">
+    <div class="mockup-header">mkdn — Editing document.md</div>
+    <div class="mockup-body" style="background: #1a2332; color: #c8d0d8; font-family: 'SF Mono', Menlo, monospace; padding: 20px; min-height: 580px; font-size: 12px; line-height: 1.7;">
+      <div style="color: #6b7a8d; font-size: 10px; margin-bottom: 12px;">← User edits here while referencing the guide →</div>
+      <span style="color: #e8c86e;"># </span><span style="color: #c8d0d8;">My Project</span><br><br>
+      <span style="color: #e8c86e;">## </span><span style="color: #c8d0d8;">Overview</span><br><br>
+      This is <span style="color: #e8c86e;">**</span>important<span style="color: #e8c86e;">**</span> work.<br><br>
+      <span style="color: #e8c86e;">```python</span><br>
+      <span style="color: #cc7832;">def</span> <span style="color: #8ac6d1;">hello</span>():<br>
+      &nbsp;&nbsp;<span style="color: #cc7832;">print</span>(<span style="color: #6a8759;">"Hello"</span>)<br>
+      <span style="color: #e8c86e;">```</span><br><br>
+      <span style="color: #e8c86e;">- </span>First item<br>
+      <span style="color: #e8c86e;">- </span>Second item<br>
+      <span style="color: #e8c86e;">- </span>Third item<br>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 24px; padding: 16px 20px; background: rgba(126, 200, 227, 0.08); border: 1px solid rgba(126, 200, 227, 0.15); border-radius: 8px;">
+  <h3 style="margin: 0 0 8px 0; font-size: 14px;">Two Windows — Help + Markdown Guide</h3>
+  <ul style="margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.8;">
+    <li><strong>Help Window</strong> (Help menu → mkdn Help) — Shortcuts, Features, CLI Usage, About</li>
+    <li><strong>Markdown Guide</strong> (Help menu → Markdown Guide) — Read-only syntax reference with Syntax + Result side-by-side</li>
+    <li>Guide stays open as a <strong>floating panel</strong> while the user edits</li>
+    <li>Sidebar sections: Headings, Text Styling, Links & Images, Lists, Code, Blockquotes, Tables, Horizontal Rules, Task Lists, Mermaid</li>
+    <li>Each section shows <strong>syntax → rendered result</strong> pairs</li>
+  </ul>
+</div>

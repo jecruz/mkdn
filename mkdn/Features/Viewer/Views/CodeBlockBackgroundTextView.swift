@@ -4,25 +4,11 @@
 
     /// `NSTextView` subclass that draws rounded-rectangle background containers
     /// behind code block text ranges identified via ``CodeBlockAttributes``.
-    ///
-    /// After `super.drawBackground(in:)` fills the document background, this
-    /// subclass enumerates `.codeBlockRange` attributes in the text storage,
-    /// computes a bounding rectangle from TextKit 2 layout fragment frames for
-    /// each code block, and draws a filled-and-stroked rounded rectangle behind
-    /// the code text. The text content (including syntax highlighting) then draws
-    /// on top of the container in the normal text drawing pass.
-    ///
-    /// The container extends to the full width of the text container (FR-1) and
-    /// relies on `NSParagraphStyle.headIndent` / `tailIndent` set by the text
-    /// storage builder to create visual padding between the box edge and the
-    /// code text content.
-    ///
-    /// On mouse hover, a copy button overlay appears at the top-right corner of
-    /// the hovered code block. Clicking the button copies the raw code content
-    /// (without language label) to the system clipboard.
     final class CodeBlockBackgroundTextView: NSTextView {
-        // MARK: - Constants
+        // MARK: - Document State
+        weak var documentState: DocumentState?
 
+        // MARK: - Constants
         static let cornerRadius: CGFloat = 6
         static let borderWidth: CGFloat = 1
         static let borderOpacity: CGFloat = 0.3
@@ -31,14 +17,11 @@
         static let copyButtonSize: CGFloat = 24
 
         // MARK: - Types
-
         struct CodeBlockInfo {
             let blockID: String
             let range: NSRange
             let colorInfo: CodeBlockColorInfo
         }
-
-        // MARK: - Copy Button Types
 
         struct CodeBlockGeometry {
             let blockID: String
@@ -48,27 +31,21 @@
         }
 
         // MARK: - Code Block Cache
-
         var cachedCodeBlocks: [CodeBlockInfo] = []
         var isCodeBlockCacheValid = false
 
         // MARK: - Copy Button State
-
         var hoveredBlockID: String?
         var copyButtonOverlay: NSView?
         var cachedBlockRects: [CodeBlockGeometry] = []
 
         // MARK: - Find State
-
         weak var findState: FindState?
 
         // MARK: - Print Support
-
-        /// Current indexed blocks retained for print-time attributed string rebuild.
         var printBlocks: [IndexedBlock] = []
 
         // MARK: - Live Resize
-
         override func setFrameSize(_ newSize: NSSize) {
             super.setFrameSize(newSize)
             invalidateCodeBlockCache()
@@ -76,7 +53,6 @@
         }
 
         // MARK: - Text Change Invalidation
-
         override func didChangeText() {
             super.didChangeText()
             invalidateCodeBlockCache()
@@ -87,7 +63,6 @@
         }
 
         // MARK: - Escape to Dismiss Find
-
         override func cancelOperation(_ sender: Any?) {
             if let findState, findState.isVisible {
                 findState.dismiss()
@@ -97,7 +72,6 @@
         }
 
         // MARK: - Mouse Tracking
-
         override func updateTrackingAreas() {
             super.updateTrackingAreas()
             installFullBoundsTrackingArea()
@@ -120,7 +94,6 @@
         }
 
         override func mouseMoved(with event: NSEvent) {
-            // Don't override cursor when another view (e.g. outline HUD) is on top.
             if isObscuredAtPoint(event.locationInWindow) { return }
 
             let point = convert(event.locationInWindow, from: nil)
@@ -147,7 +120,6 @@
             }
         }
 
-        /// Returns true if another view is on top of this text view at the given window point.
         private func isObscuredAtPoint(_ windowPoint: NSPoint) -> Bool {
             guard let hitView = window?.contentView?.hitTest(windowPoint) else { return false }
             return hitView !== self && !hitView.isDescendant(of: self)
@@ -159,14 +131,63 @@
         }
 
         // MARK: - Drawing
-
         override func drawBackground(in rect: NSRect) {
             super.drawBackground(in: rect)
             drawCodeBlockContainers(in: rect)
         }
 
-        // MARK: - Print
+        // MARK: - Context Menu
+        override func menu(for event: NSEvent) -> NSMenu? {
+            let menu = super.menu(for: event) ?? NSMenu()
 
+            menu.addItem(.separator())
+
+            if let state = documentState {
+                if state.viewMode == .sideBySide {
+                    let previewItem = NSMenuItem(
+                        title: "Preview Mode",
+                        action: #selector(switchToPreviewMode),
+                        keyEquivalent: ""
+                    )
+                    previewItem.target = self
+                    menu.addItem(previewItem)
+                } else {
+                    let editItem = NSMenuItem(
+                        title: "Edit Mode",
+                        action: #selector(switchToEditMode),
+                        keyEquivalent: ""
+                    )
+                    editItem.target = self
+                    menu.addItem(editItem)
+                }
+            }
+
+            menu.addItem(.separator())
+
+            let closeItem = NSMenuItem(
+                title: "Close Window",
+                action: #selector(closeCurrentWindow),
+                keyEquivalent: ""
+            )
+            closeItem.target = self
+            menu.addItem(closeItem)
+
+            return menu
+        }
+
+        @objc private func switchToPreviewMode() {
+            documentState?.switchMode(to: .previewOnly)
+        }
+
+        @objc private func switchToEditMode() {
+            documentState?.switchMode(to: .sideBySide)
+        }
+
+        @objc private func closeCurrentWindow() {
+            window?.close()
+        }
+
+        // MARK: - Print
         override func printView(_ sender: Any?) {
             guard !printBlocks.isEmpty else {
                 super.printView(sender)

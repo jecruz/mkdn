@@ -4,7 +4,6 @@
 
     /// Root content view that switches between preview-only and side-by-side modes.
     /// Overlays a unified stateful orb indicator and an ephemeral mode label.
-    /// Bridges the system `colorScheme` environment to `AppSettings` for auto-theming.
     public struct ContentView: View {
         @Environment(DocumentState.self) private var documentState
         @Environment(AppSettings.self) private var appSettings

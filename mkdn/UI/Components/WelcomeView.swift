@@ -1,15 +1,16 @@
 #if os(macOS)
+    import AppKit
     import SwiftUI
 
+    extension Notification.Name {
+        public static let createNewMarkdownFile = Notification.Name("createNewMarkdownFile")
+    }
+
     /// Welcome screen shown when no file is open.
-    ///
-    /// Adapts its icon and message based on whether the window is in directory
-    /// mode (sidebar visible) or single-file mode. In directory mode, the
-    /// instruction rows are hidden and the message guides the user to select
-    /// a file from the sidebar.
     struct WelcomeView: View {
         @Environment(AppSettings.self) private var appSettings
         @Environment(\.isDirectoryMode) private var isDirectoryMode
+        @State private var hostWindow: NSWindow?
 
         var body: some View {
             VStack(spacing: 20) {
@@ -49,6 +50,24 @@
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(appSettings.effectiveColors.background)
+            .background(WindowAccessor { window in hostWindow = window })
+            .contextMenu {
+                Button("Close Window") {
+                    closeWindow()
+                }
+
+                Divider()
+
+                Button("New Markdown") {
+                    createNewMarkdownFile()
+                }
+
+                Divider()
+
+                Button("Quit mkdn") {
+                    NSApp.terminate(nil)
+                }
+            }
         }
 
         private func instructionRow(icon: String, text: String) -> some View {
@@ -59,6 +78,29 @@
                 Text(text)
                     .font(.callout)
                     .foregroundColor(appSettings.effectiveColors.foreground)
+            }
+        }
+
+        private func closeWindow() {
+            if let window = hostWindow ?? NSApp.keyWindow {
+                window.close()
+            }
+        }
+
+        private func createNewMarkdownFile() {
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let timestamp = ISO8601DateFormatter().string(from: Date()).replacingOccurrences(of: ":", with: "-")
+            let newFileURL = documentsURL.appendingPathComponent("Untitled-\(timestamp).md")
+
+            do {
+                try "# New Document\n\n".write(to: newFileURL, atomically: true, encoding: .utf8)
+                let window = hostWindow ?? NSApp.keyWindow
+                FileOpenService.shared.openFileWindow?(newFileURL)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    window?.close()
+                }
+            } catch {
+                print("Failed to create new markdown file: \(error)")
             }
         }
     }

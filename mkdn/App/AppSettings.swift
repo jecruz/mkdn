@@ -82,29 +82,7 @@
         ) -> ThemeColors {
             let theme = themeMode.resolved(for: systemColorScheme)
 
-            // Built-in palette takes priority.
-            if let palette = selection.builtInPalette {
-                let bg = Color(hex: palette.background)
-                let fg = Color(hex: palette.text)
-                let accent = Color(hex: palette.accent)
-                return ThemeColors(
-                    background: bg,
-                    backgroundSecondary: bg.opacity(0.85),
-                    foreground: fg,
-                    foregroundSecondary: fg.opacity(0.7),
-                    accent: accent,
-                    border: fg.opacity(0.2),
-                    codeBackground: bg.opacity(0.6),
-                    codeForeground: fg,
-                    linkColor: accent,
-                    headingColor: fg,
-                    blockquoteBorder: fg.opacity(0.4),
-                    blockquoteBackground: bg.opacity(0.5),
-                    findHighlight: accent
-                )
-            }
-
-            // Custom mix is second.
+            // Custom mix takes priority (so local tweaks persist).
             if selection.isCustomMixing {
                 let bgColor = selection.customBackground.map { Color(hex: $0) } ?? theme.colors.background
                 let fgColor = selection.customText.map { Color(hex: $0) } ?? theme.colors.foreground
@@ -123,6 +101,28 @@
                     blockquoteBorder: fgColor.opacity(0.4),
                     blockquoteBackground: bgColor.opacity(0.5),
                     findHighlight: fgColor.opacity(0.6)
+                )
+            }
+
+            // Built-in palette is second.
+            if let palette = selection.builtInPalette {
+                let bg = Color(hex: palette.background)
+                let fg = Color(hex: palette.text)
+                let accent = Color(hex: palette.accent)
+                return ThemeColors(
+                    background: bg,
+                    backgroundSecondary: bg.opacity(0.85),
+                    foreground: fg,
+                    foregroundSecondary: fg.opacity(0.7),
+                    accent: accent,
+                    border: fg.opacity(0.2),
+                    codeBackground: bg.opacity(0.6),
+                    codeForeground: fg,
+                    linkColor: accent,
+                    headingColor: fg,
+                    blockquoteBorder: fg.opacity(0.4),
+                    blockquoteBackground: bg.opacity(0.5),
+                    findHighlight: accent
                 )
             }
 

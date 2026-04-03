@@ -1,12 +1,9 @@
 #if os(macOS)
     import AppKit
+    import Combine
     import SwiftUI
 
     /// Publishes ``DirectoryState`` as a focused scene value when present.
-    ///
-    /// Uses a single view branch (no `if/else`) to avoid changing structural
-    /// identity when `directoryState` transitions from nil to non-nil, which
-    /// would cause SwiftUI to rebuild the content tree and re-render the document.
     private struct OptionalDirectoryEnvironment: ViewModifier {
         let directoryState: DirectoryState?
 
@@ -17,19 +14,7 @@
     }
 
     /// Wrapper view that creates a per-window ``DocumentState`` and wires it into
-    /// the environment. Each ``WindowGroup`` instance embeds one `DocumentWindow`,
-    /// giving every window its own independent document lifecycle.
-    ///
-    /// On appearance the view loads the file at the launch item URL (if a file),
-    /// records it in Open Recent, and publishes the ``DocumentState`` via
-    /// `focusedSceneValue` so menu commands can operate on the active window's
-    /// document.
-    ///
-    /// The view also observes ``FileOpenService/pendingURLs`` and opens a new
-    /// window for every URL that arrives at runtime (Finder, dock, other apps).
-    /// On the initial launch window (where `launchItem` is nil), pending URLs from
-    /// the CLI or a cold-start Finder open are adopted directly to avoid an extra
-    /// empty window.
+    /// the environment.
     public struct DocumentWindow: View {
         public let launchItem: LaunchItem?
         @State private var documentState = DocumentState()
@@ -40,12 +25,11 @@
         @State private var overlayGeneration = 0
         @Environment(AppSettings.self) private var appSettings
         @Environment(\.openWindow) private var openWindow
+        @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
         public init(launchItem: LaunchItem?) {
             self.launchItem = launchItem
         }
-
-        @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
         private var motion: MotionPreference {
             MotionPreference(reduceMotion: reduceMotion)
@@ -134,6 +118,12 @@
                 for url in FileOpenService.shared.consumePendingURLs() {
                     openWindow(value: LaunchItem.file(url))
                 }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .openHelpWindow)) { _ in
+                openWindow(id: "help")
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .openMarkdownGuide)) { _ in
+                openWindow(id: "markdown-guide")
             }
         }
 

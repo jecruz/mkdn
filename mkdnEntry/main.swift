@@ -1,12 +1,14 @@
 import AppKit
 import mkdnLib
 import SwiftUI
+import Combine
 
 // MARK: - SwiftUI App (no @main)
 
 struct MkdnApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State private var appSettings = AppSettings()
+    @State private var newMarkdownTrigger = false
 
     private var savedWindowWidth: CGFloat {
         let stored = UserDefaults.standard.double(forKey: "windowWidth")
@@ -28,8 +30,20 @@ struct MkdnApp: App {
         .windowStyle(.hiddenTitleBar)
         .commands {
             MkdnCommands(appSettings: appSettings)
-            OpenRecentCommands()
         }
+
+        Window("mkdn Help", id: "help-window") {
+            HelpWindowView()
+                .environment(appSettings)
+        }
+        .defaultSize(width: 600, height: 450)
+
+        Window("Markdown Guide", id: "markdown-guide") {
+            MarkdownGuideView()
+                .environment(appSettings)
+        }
+        .defaultSize(width: 650, height: 500)
+        .windowStyle(.titleBar)
     }
 }
 

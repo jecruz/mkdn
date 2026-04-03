@@ -4,15 +4,6 @@
 
     /// `NSViewRepresentable` wrapping a read-only, selectable `NSTextView` backed by
     /// TextKit 2 for continuous cross-block text selection in the preview pane.
-    ///
-    /// The text view displays an `NSAttributedString` produced by
-    /// ``MarkdownTextStorageBuilder`` and supports native macOS selection behaviors:
-    /// click-drag, Shift-click, Cmd+A, Cmd+C. Non-text elements (Mermaid diagrams,
-    /// images) are represented by `NSTextAttachment` placeholders; overlays are
-    /// positioned by the ``OverlayCoordinator``.
-    ///
-    /// The ``Coordinator`` owns an ``EntranceAnimator`` that enumerates layout
-    /// fragments after content is set to apply staggered cover-layer animations.
     struct SelectableTextView: NSViewRepresentable {
         let attributedText: NSAttributedString
         let attachments: [AttachmentInfo]
@@ -47,6 +38,7 @@
             coordinator.documentState = documentState
             coordinator.animator.textView = textView
             textView.delegate = coordinator
+            textView.documentState = documentState
             coordinator.overlayCoordinator.onLayoutInvalidation = { [weak coordinator] in
                 guard let coordinator else { return }
                 guard !coordinator.gate.isGateActive else { return }
@@ -83,6 +75,7 @@
             }
 
             let coordinator = context.coordinator
+            textView.documentState = documentState
             if coordinator.headingOffsets != headingOffsets {
                 coordinator.headingOffsets = headingOffsets
                 coordinator.invalidateHeadingPositionCache()
@@ -109,7 +102,6 @@
             )
 
             // Consume pending scroll-to-heading target from outline navigation.
-            // Skip if already scrolled to this target to prevent double-scroll.
             if let targetBlockIndex = outlineState.pendingScrollTarget,
                targetBlockIndex != coordinator.lastScrolledTarget
             {
@@ -120,11 +112,9 @@
                 }
             }
         }
-    }
 
-    // MARK: - View Configuration
+        // MARK: - View Configuration
 
-    extension SelectableTextView {
         private static func makeScrollableCodeBlockTextView() -> (
             NSScrollView, CodeBlockBackgroundTextView
         ) {
@@ -319,10 +309,6 @@
 
     // MARK: - Live Resize Scroll View
 
-    /// NSScrollView subclass that forces TextKit 2 to lay out text in the visible
-    /// viewport during live window resize. Without this, the viewport layout
-    /// controller defers text layout for newly-exposed areas until resize ends,
-    /// causing blank regions while dragging.
     private final class LiveResizeScrollView: NSScrollView {
         private var liveResizeBoundsOrigin: NSPoint?
 

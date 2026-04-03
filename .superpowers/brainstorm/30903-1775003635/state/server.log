@@ -1,0 +1,4 @@
+{"type":"server-started","port":61525,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:61525","screen_dir":"/Users/jeffreycruz/Development/TOOLS/mkdn/.superpowers/brainstorm/30903-1775003635/content","state_dir":"/Users/jeffreycruz/Development/TOOLS/mkdn/.superpowers/brainstorm/30903-1775003635/state"}
+{"type":"screen-added","file":"/Users/jeffreycruz/Development/TOOLS/mkdn/.superpowers/brainstorm/30903-1775003635/content/help-window-mockup.html"}
+{"type":"screen-added","file":"/Users/jeffreycruz/Development/TOOLS/mkdn/.superpowers/brainstorm/30903-1775003635/content/markdown-guide-mockup.html"}
+{"type":"server-stopped","reason":"owner process exited"}
