@@ -203,6 +203,10 @@
             applyEntranceOrGate(
                 coordinator: coordinator, textView: textView, scrollView: scrollView
             )
+            
+            textView.textLayoutManager?.textViewportLayoutController.layoutViewport()
+            textView.setNeedsDisplay(textView.bounds)
+            
             coordinator.lastAppliedText = attributedText
             RenderCompletionSignal.shared.signalRenderComplete()
         }
@@ -284,7 +288,7 @@
             to textView: NSTextView,
             scrollView: NSScrollView
         ) {
-            let colors = theme.colors
+            let colors = appSettings.effectiveColors
             let bgColor = PlatformTypeConverter.color(from: colors.background)
             let accentColor = PlatformTypeConverter.color(from: colors.accent)
 

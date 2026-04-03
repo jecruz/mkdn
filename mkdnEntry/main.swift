@@ -31,19 +31,6 @@ struct MkdnApp: App {
         .commands {
             MkdnCommands(appSettings: appSettings)
         }
-
-        Window("mkdn Help", id: "help-window") {
-            HelpWindowView()
-                .environment(appSettings)
-        }
-        .defaultSize(width: 600, height: 450)
-
-        Window("Markdown Guide", id: "markdown-guide") {
-            MarkdownGuideView()
-                .environment(appSettings)
-        }
-        .defaultSize(width: 650, height: 500)
-        .windowStyle(.titleBar)
     }
 }
 

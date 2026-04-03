@@ -28,7 +28,7 @@ public struct HelpWindowView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .background(appSettings.theme.colors.background)
+            .background(appSettings.effectiveColors.background)
         }
         .frame(minWidth: 600, minHeight: 450)
     }
@@ -80,10 +80,10 @@ private struct ShortcutsSection: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.title2.bold())
-                .foregroundColor(appSettings.theme.colors.headingColor)
+                .foregroundColor(appSettings.effectiveColors.headingColor)
             Text(subtitle)
                 .font(.caption)
-                .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
         }
     }
 
@@ -92,7 +92,7 @@ private struct ShortcutsSection: View {
             Text(title.uppercased())
                 .font(.caption2)
                 .fontWeight(.semibold)
-                .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
                 .tracking(1)
                 .padding(.bottom, 8)
 
@@ -100,16 +100,16 @@ private struct ShortcutsSection: View {
                 HStack {
                     Text(shortcut.0)
                         .font(.callout)
-                        .foregroundColor(appSettings.theme.colors.foreground)
+                        .foregroundColor(appSettings.effectiveColors.foreground)
                     Spacer()
                     Text(shortcut.1)
                         .font(.system(.caption, design: .monospaced))
-                        .foregroundColor(appSettings.theme.colors.accent)
+                        .foregroundColor(appSettings.effectiveColors.accent)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 2)
                         .background(
                             RoundedRectangle(cornerRadius: 4)
-                                .fill(appSettings.theme.colors.codeBackground)
+                                .fill(appSettings.effectiveColors.codeBackground)
                         )
                 }
                 .padding(.vertical, 4)
@@ -127,7 +127,7 @@ private struct FeaturesSection: View {
         VStack(alignment: .leading, spacing: 20) {
             Text("Features")
                 .font(.title2.bold())
-                .foregroundColor(appSettings.theme.colors.headingColor)
+                .foregroundColor(appSettings.effectiveColors.headingColor)
 
             featureRow("doc.richtext", "Preview & Edit Modes",
                        "Switch between rendered preview (⌘1) and side-by-side editor (⌘2).")
@@ -149,15 +149,15 @@ private struct FeaturesSection: View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: icon)
                 .font(.title3)
-                .foregroundColor(appSettings.theme.colors.accent)
+                .foregroundColor(appSettings.effectiveColors.accent)
                 .frame(width: 24)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.callout.bold())
-                    .foregroundColor(appSettings.theme.colors.foreground)
+                    .foregroundColor(appSettings.effectiveColors.foreground)
                 Text(description)
                     .font(.caption)
-                    .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
             }
         }
     }
@@ -172,7 +172,7 @@ private struct CLIUsageSection: View {
         VStack(alignment: .leading, spacing: 20) {
             Text("CLI Usage")
                 .font(.title2.bold())
-                .foregroundColor(appSettings.theme.colors.headingColor)
+                .foregroundColor(appSettings.effectiveColors.headingColor)
 
             cliExample("Open a file", "mkdn README.md")
             cliExample("Open multiple files", "mkdn file1.md file2.md")
@@ -182,7 +182,7 @@ private struct CLIUsageSection: View {
                 Text("SUPPORTED EXTENSIONS")
                     .font(.caption2)
                     .fontWeight(.semibold)
-                    .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
                     .tracking(1)
 
                 HStack(spacing: 12) {
@@ -195,12 +195,12 @@ private struct CLIUsageSection: View {
                 Text("DEFAULT APP")
                     .font(.caption2)
                     .fontWeight(.semibold)
-                    .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
                     .tracking(1)
 
                 Text("Use mkdn menu → \"Set as Default Markdown App\" to register mkdn as the system handler for Markdown files.")
                     .font(.caption)
-                    .foregroundColor(appSettings.theme.colors.foreground)
+                    .foregroundColor(appSettings.effectiveColors.foreground)
             }
         }
         .padding(24)
@@ -210,15 +210,15 @@ private struct CLIUsageSection: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
                 .font(.callout)
-                .foregroundColor(appSettings.theme.colors.foreground)
+                .foregroundColor(appSettings.effectiveColors.foreground)
             Text(command)
                 .font(.system(.callout, design: .monospaced))
-                .foregroundColor(appSettings.theme.colors.accent)
+                .foregroundColor(appSettings.effectiveColors.accent)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
                 .background(
                     RoundedRectangle(cornerRadius: 6)
-                        .fill(appSettings.theme.colors.codeBackground)
+                        .fill(appSettings.effectiveColors.codeBackground)
                 )
         }
     }
@@ -226,12 +226,12 @@ private struct CLIUsageSection: View {
     private func extensionBadge(_ ext: String) -> some View {
         Text(ext)
             .font(.system(.caption, design: .monospaced))
-            .foregroundColor(appSettings.theme.colors.accent)
+            .foregroundColor(appSettings.effectiveColors.accent)
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
             .background(
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(appSettings.theme.colors.codeBackground)
+                    .fill(appSettings.effectiveColors.codeBackground)
             )
     }
 }
@@ -245,19 +245,19 @@ private struct AboutSection: View {
         VStack(spacing: 16) {
             Image(systemName: "doc.richtext")
                 .font(.system(size: 48))
-                .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
 
             Text("mkdn")
                 .font(.system(size: 28, weight: .bold, design: .monospaced))
-                .foregroundColor(appSettings.theme.colors.headingColor)
+                .foregroundColor(appSettings.effectiveColors.headingColor)
 
             Text("A native macOS Markdown viewer and editor")
                 .font(.callout)
-                .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
 
             Text("Built with Swift & SwiftUI")
                 .font(.caption)
-                .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(24)

@@ -82,25 +82,27 @@
         ) -> ThemeColors {
             let theme = themeMode.resolved(for: systemColorScheme)
 
-            // Custom mix takes priority (so local tweaks persist).
+            // Custom mix takes priority, inheriting missing properties from the built-in palette (if any)
             if selection.isCustomMixing {
-                let bgColor = selection.customBackground.map { Color(hex: $0) } ?? theme.colors.background
-                let fgColor = selection.customText.map { Color(hex: $0) } ?? theme.colors.foreground
+                let baseColors = selection.builtInPalette?.colors ?? theme.colors
+                let bgColor = selection.customBackground.map { Color(hex: $0) } ?? baseColors.background
+                let fgColor = selection.customText.map { Color(hex: $0) } ?? baseColors.foreground
+                let accentColor = selection.builtInPalette?.colors.accent ?? theme.colors.accent
                 
                 return ThemeColors(
                     background: bgColor,
                     backgroundSecondary: bgColor.opacity(0.85),
                     foreground: fgColor,
                     foregroundSecondary: fgColor.opacity(0.7),
-                    accent: fgColor.opacity(0.6),
+                    accent: accentColor,
                     border: fgColor.opacity(0.2),
                     codeBackground: bgColor.opacity(0.6),
                     codeForeground: fgColor,
-                    linkColor: fgColor.opacity(0.8),
+                    linkColor: accentColor.opacity(0.8),
                     headingColor: fgColor,
                     blockquoteBorder: fgColor.opacity(0.4),
                     blockquoteBackground: bgColor.opacity(0.5),
-                    findHighlight: fgColor.opacity(0.6)
+                    findHighlight: accentColor.opacity(0.6)
                 )
             }
 

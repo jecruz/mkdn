@@ -4,19 +4,23 @@
 
     /// Transparent NSView helper that configures the hosting NSWindow.
     public struct WindowAccessor: NSViewRepresentable {
+        public var applyStyles: Bool
         public var onWindowAvailable: ((NSWindow?) -> Void)?
 
-        public init(onWindowAvailable: ((NSWindow?) -> Void)? = nil) {
+        public init(applyStyles: Bool = true, onWindowAvailable: ((NSWindow?) -> Void)? = nil) {
+            self.applyStyles = applyStyles
             self.onWindowAvailable = onWindowAvailable
         }
 
         public func makeNSView(context _: Context) -> WindowAccessorView {
             let view = WindowAccessorView()
+            view.applyStyles = applyStyles
             view.onWindowAvailable = onWindowAvailable
             return view
         }
 
         public func updateNSView(_ nsView: WindowAccessorView, context _: Context) {
+            nsView.applyStyles = applyStyles
             nsView.onWindowAvailable = onWindowAvailable
         }
     }
@@ -24,6 +28,7 @@
     /// Custom NSView that configures its hosting window when attached.
     public final class WindowAccessorView: NSView {
         private var didConfigure = false
+        var applyStyles: Bool = true
         var onWindowAvailable: ((NSWindow?) -> Void)?
 
         override public func viewDidMoveToWindow() {
@@ -32,9 +37,11 @@
             didConfigure = true
             onWindowAvailable?(window)
 
-            DispatchQueue.main.async { [weak window] in
-                guard let window else { return }
-                self.configureWindow(window)
+            if applyStyles {
+                DispatchQueue.main.async { [weak window] in
+                    guard let window else { return }
+                    self.configureWindow(window)
+                }
             }
         }
 

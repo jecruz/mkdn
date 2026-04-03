@@ -73,7 +73,7 @@
 
                 renderAndBuild(newBlocks, isFullReload: shouldAnimate)
             }
-            .onChange(of: appSettings.theme) {
+            .onChange(of: appSettings.effectiveColors) {
                 renderAndBuild(cachedBlocks, isFullReload: false)
             }
             .onChange(of: appSettings.scaleFactor) {
@@ -88,6 +88,7 @@
             textStorageResult = MarkdownTextStorageBuilder.build(
                 blocks: newBlocks,
                 theme: appSettings.theme,
+                colors: appSettings.effectiveColors,
                 scaleFactor: appSettings.scaleFactor,
                 appSettings: appSettings
             )

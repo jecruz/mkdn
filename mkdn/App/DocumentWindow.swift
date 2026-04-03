@@ -120,10 +120,10 @@
                 }
             }
             .onReceive(NotificationCenter.default.publisher(for: .openHelpWindow)) { _ in
-                openWindow(id: "help")
+                AuxiliaryWindowManager.showHelp(appSettings: appSettings)
             }
             .onReceive(NotificationCenter.default.publisher(for: .openMarkdownGuide)) { _ in
-                openWindow(id: "markdown-guide")
+                AuxiliaryWindowManager.showMarkdownGuide(appSettings: appSettings)
             }
         }
 

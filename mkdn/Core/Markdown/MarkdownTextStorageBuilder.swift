@@ -91,13 +91,14 @@ public enum MarkdownTextStorageBuilder {
     public static func build(
         blocks: [IndexedBlock],
         theme: AppTheme,
+        colors: ThemeColors? = nil,
         scaleFactor: CGFloat = 1.0,
         isPrint: Bool = false,
         appSettings: AppSettings? = nil
     ) -> TextStorageResult {
         build(
             blocks: blocks,
-            colors: theme.colors,
+            colors: colors ?? theme.colors,
             syntaxColors: theme.syntaxColors,
             scaleFactor: scaleFactor,
             isPrint: isPrint,

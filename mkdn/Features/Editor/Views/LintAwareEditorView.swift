@@ -68,6 +68,10 @@ struct LintAwareEditorView: NSViewRepresentable {
         textView.textColor = foregroundColor
         textView.backgroundColor = backgroundColor
         scrollView.backgroundColor = backgroundColor
+        
+        if let storage = textView.textStorage, storage.length > 0 {
+            storage.addAttribute(.foregroundColor, value: foregroundColor, range: NSRange(location: 0, length: storage.length))
+        }
 
         // Only update string content if changed externally (not from user typing)
         if textView.string != text {

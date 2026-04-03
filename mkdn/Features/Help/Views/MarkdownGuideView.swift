@@ -20,13 +20,9 @@ public struct MarkdownGuideView: View {
                     .padding(24)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .background(appSettings.theme.colors.background)
+            .background(appSettings.effectiveColors.background)
         }
         .frame(minWidth: 550, minHeight: 400)
-        .background(WindowAccessor { window in
-            window?.level = .floating
-            window?.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
-        })
     }
 
     @ViewBuilder
@@ -57,10 +53,10 @@ struct GuideSectionHeader: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.title2.bold())
-                .foregroundColor(appSettings.theme.colors.headingColor)
+                .foregroundColor(appSettings.effectiveColors.headingColor)
             Text(subtitle)
                 .font(.caption)
-                .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
         }
         .padding(.bottom, 12)
     }
@@ -76,23 +72,23 @@ struct SyntaxResultPanel: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("SYNTAX")
                     .font(.caption2.bold())
-                    .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
                     .tracking(1)
                 Text(syntax)
                     .font(.system(.callout, design: .monospaced))
-                    .foregroundColor(appSettings.theme.colors.accent)
+                    .foregroundColor(appSettings.effectiveColors.accent)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(12)
             .background(
                 RoundedRectangle(cornerRadius: 6)
-                    .fill(appSettings.theme.colors.codeBackground)
+                    .fill(appSettings.effectiveColors.codeBackground)
             )
 
             VStack(alignment: .leading, spacing: 4) {
                 Text("RESULT")
                     .font(.caption2.bold())
-                    .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
                     .tracking(1)
                 result
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -100,7 +96,7 @@ struct SyntaxResultPanel: View {
             .padding(12)
             .background(
                 RoundedRectangle(cornerRadius: 6)
-                    .fill(appSettings.theme.colors.codeBackground)
+                    .fill(appSettings.effectiveColors.codeBackground)
             )
         }
     }
@@ -118,10 +114,10 @@ private struct HeadingsGuide: View {
                 syntax: "# Heading 1\n## Heading 2\n### Heading 3\n#### Heading 4",
                 result: AnyView(
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Heading 1").font(.system(size: 22, weight: .bold)).foregroundColor(appSettings.theme.colors.headingColor)
-                        Text("Heading 2").font(.system(size: 18, weight: .semibold)).foregroundColor(appSettings.theme.colors.headingColor)
-                        Text("Heading 3").font(.system(size: 15, weight: .semibold)).foregroundColor(appSettings.theme.colors.headingColor)
-                        Text("Heading 4").font(.system(size: 13, weight: .semibold)).foregroundColor(appSettings.theme.colors.foreground)
+                        Text("Heading 1").font(.system(size: 22, weight: .bold)).foregroundColor(appSettings.effectiveColors.headingColor)
+                        Text("Heading 2").font(.system(size: 18, weight: .semibold)).foregroundColor(appSettings.effectiveColors.headingColor)
+                        Text("Heading 3").font(.system(size: 15, weight: .semibold)).foregroundColor(appSettings.effectiveColors.headingColor)
+                        Text("Heading 4").font(.system(size: 13, weight: .semibold)).foregroundColor(appSettings.effectiveColors.foreground)
                     }
                 )
             )
@@ -139,16 +135,16 @@ private struct TextStylingGuide: View {
                 syntax: "*italic*\n**bold**\n***bold italic***\n~~strikethrough~~\n`inline code`",
                 result: AnyView(
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("italic").italic().foregroundColor(appSettings.theme.colors.foreground)
-                        Text("bold").bold().foregroundColor(appSettings.theme.colors.foreground)
-                        Text("bold italic").bold().italic().foregroundColor(appSettings.theme.colors.foreground)
-                        Text("strikethrough").strikethrough().foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                        Text("italic").italic().foregroundColor(appSettings.effectiveColors.foreground)
+                        Text("bold").bold().foregroundColor(appSettings.effectiveColors.foreground)
+                        Text("bold italic").bold().italic().foregroundColor(appSettings.effectiveColors.foreground)
+                        Text("strikethrough").strikethrough().foregroundColor(appSettings.effectiveColors.foregroundSecondary)
                         Text("inline code")
                             .font(.system(.callout, design: .monospaced))
-                            .foregroundColor(appSettings.theme.colors.accent)
+                            .foregroundColor(appSettings.effectiveColors.accent)
                             .padding(.horizontal, 4)
                             .padding(.vertical, 1)
-                            .background(RoundedRectangle(cornerRadius: 3).fill(appSettings.theme.colors.codeBackground))
+                            .background(RoundedRectangle(cornerRadius: 3).fill(appSettings.effectiveColors.codeBackground))
                     }
                 )
             )
@@ -166,13 +162,13 @@ private struct LinksImagesGuide: View {
                 syntax: "[Link text](https://example.com)\n![Alt text](image.png)\n[Reference link][1]\n\n[1]: https://example.com",
                 result: AnyView(
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Link text").underline().foregroundColor(appSettings.theme.colors.linkColor)
+                        Text("Link text").underline().foregroundColor(appSettings.effectiveColors.linkColor)
                         HStack(spacing: 4) {
                             Image(systemName: "photo")
-                                .foregroundColor(appSettings.theme.colors.foregroundSecondary)
-                            Text("Alt text").foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                                .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
+                            Text("Alt text").foregroundColor(appSettings.effectiveColors.foregroundSecondary)
                         }
-                        Text("Reference link").underline().foregroundColor(appSettings.theme.colors.linkColor)
+                        Text("Reference link").underline().foregroundColor(appSettings.effectiveColors.linkColor)
                     }
                 )
             )
@@ -190,13 +186,13 @@ private struct ListsGuide: View {
                 syntax: "- Item one\n- Item two\n  - Nested item\n\n1. First\n2. Second\n3. Third",
                 result: AnyView(
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("• Item one").foregroundColor(appSettings.theme.colors.foreground)
-                        Text("• Item two").foregroundColor(appSettings.theme.colors.foreground)
-                        Text("    ◦ Nested item").foregroundColor(appSettings.theme.colors.foreground)
+                        Text("• Item one").foregroundColor(appSettings.effectiveColors.foreground)
+                        Text("• Item two").foregroundColor(appSettings.effectiveColors.foreground)
+                        Text("    ◦ Nested item").foregroundColor(appSettings.effectiveColors.foreground)
                         Text("").frame(height: 4)
-                        Text("1. First").foregroundColor(appSettings.theme.colors.foreground)
-                        Text("2. Second").foregroundColor(appSettings.theme.colors.foreground)
-                        Text("3. Third").foregroundColor(appSettings.theme.colors.foreground)
+                        Text("1. First").foregroundColor(appSettings.effectiveColors.foreground)
+                        Text("2. Second").foregroundColor(appSettings.effectiveColors.foreground)
+                        Text("3. Third").foregroundColor(appSettings.effectiveColors.foreground)
                     }
                 )
             )
@@ -216,14 +212,14 @@ private struct CodeGuide: View {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("let greeting = \"Hello\"")
                             .font(.system(.callout, design: .monospaced))
-                            .foregroundColor(appSettings.theme.colors.codeForeground)
+                            .foregroundColor(appSettings.effectiveColors.codeForeground)
                         Text("print(greeting)")
                             .font(.system(.callout, design: .monospaced))
-                            .foregroundColor(appSettings.theme.colors.codeForeground)
+                            .foregroundColor(appSettings.effectiveColors.codeForeground)
                     }
                     .padding(10)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(RoundedRectangle(cornerRadius: 6).fill(appSettings.theme.colors.codeBackground))
+                    .background(RoundedRectangle(cornerRadius: 6).fill(appSettings.effectiveColors.codeBackground))
                 )
             )
         }
@@ -241,13 +237,13 @@ private struct BlockquotesGuide: View {
                 result: AnyView(
                     VStack(alignment: .leading, spacing: 8) {
                         HStack(spacing: 8) {
-                            RoundedRectangle(cornerRadius: 1).fill(appSettings.theme.colors.blockquoteBorder).frame(width: 3)
-                            Text("This is a quote").foregroundColor(appSettings.theme.colors.foreground)
+                            RoundedRectangle(cornerRadius: 1).fill(appSettings.effectiveColors.blockquoteBorder).frame(width: 3)
+                            Text("This is a quote").foregroundColor(appSettings.effectiveColors.foreground)
                         }
                         HStack(spacing: 8) {
-                            RoundedRectangle(cornerRadius: 1).fill(appSettings.theme.colors.blockquoteBorder).frame(width: 3)
-                            RoundedRectangle(cornerRadius: 1).fill(appSettings.theme.colors.blockquoteBorder).frame(width: 3)
-                            Text("Nested quote").foregroundColor(appSettings.theme.colors.foreground)
+                            RoundedRectangle(cornerRadius: 1).fill(appSettings.effectiveColors.blockquoteBorder).frame(width: 3)
+                            RoundedRectangle(cornerRadius: 1).fill(appSettings.effectiveColors.blockquoteBorder).frame(width: 3)
+                            Text("Nested quote").foregroundColor(appSettings.effectiveColors.foreground)
                         }
                     }
                 )
@@ -278,7 +274,7 @@ private struct TablesGuide: View {
                             tableCell("C", bold: false)
                         }
                     }
-                    .background(RoundedRectangle(cornerRadius: 4).stroke(appSettings.theme.colors.border, lineWidth: 1))
+                    .background(RoundedRectangle(cornerRadius: 4).stroke(appSettings.effectiveColors.border, lineWidth: 1))
                 )
             )
         }
@@ -287,7 +283,7 @@ private struct TablesGuide: View {
     private func tableCell(_ text: String, bold: Bool) -> some View {
         Text(text)
             .font(bold ? .callout.bold() : .callout)
-            .foregroundColor(appSettings.theme.colors.foreground)
+            .foregroundColor(appSettings.effectiveColors.foreground)
             .frame(maxWidth: .infinity)
             .padding(6)
     }
@@ -324,16 +320,16 @@ private struct TaskListsGuide: View {
                 result: AnyView(
                     VStack(alignment: .leading, spacing: 6) {
                         HStack(spacing: 6) {
-                            Image(systemName: "square").foregroundColor(appSettings.theme.colors.foregroundSecondary)
-                            Text("Unchecked task").foregroundColor(appSettings.theme.colors.foreground)
+                            Image(systemName: "square").foregroundColor(appSettings.effectiveColors.foregroundSecondary)
+                            Text("Unchecked task").foregroundColor(appSettings.effectiveColors.foreground)
                         }
                         HStack(spacing: 6) {
-                            Image(systemName: "checkmark.square.fill").foregroundColor(appSettings.theme.colors.accent)
-                            Text("Completed task").foregroundColor(appSettings.theme.colors.foreground)
+                            Image(systemName: "checkmark.square.fill").foregroundColor(appSettings.effectiveColors.accent)
+                            Text("Completed task").foregroundColor(appSettings.effectiveColors.foreground)
                         }
                         HStack(spacing: 6) {
-                            Image(systemName: "square").foregroundColor(appSettings.theme.colors.foregroundSecondary)
-                            Text("Another task").foregroundColor(appSettings.theme.colors.foreground)
+                            Image(systemName: "square").foregroundColor(appSettings.effectiveColors.foregroundSecondary)
+                            Text("Another task").foregroundColor(appSettings.effectiveColors.foreground)
                         }
                     }
                 )
@@ -355,7 +351,7 @@ private struct MermaidGuide: View {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Renders as an interactive flowchart diagram.")
                             .font(.callout)
-                            .foregroundColor(appSettings.theme.colors.foreground)
+                            .foregroundColor(appSettings.effectiveColors.foreground)
                     }
                 )
             )
@@ -363,7 +359,7 @@ private struct MermaidGuide: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("SUPPORTED DIAGRAM TYPES")
                     .font(.caption2.bold())
-                    .foregroundColor(appSettings.theme.colors.foregroundSecondary)
+                    .foregroundColor(appSettings.effectiveColors.foregroundSecondary)
                     .tracking(1)
 
                 ForEach(["flowchart — Flow diagrams with nodes and edges",
@@ -372,11 +368,11 @@ private struct MermaidGuide: View {
                          "stateDiagram-v2 — State machine transitions"], id: \.self) { item in
                     HStack(spacing: 8) {
                         Circle()
-                            .fill(appSettings.theme.colors.accent)
+                            .fill(appSettings.effectiveColors.accent)
                             .frame(width: 5, height: 5)
                         Text(item)
                             .font(.caption)
-                            .foregroundColor(appSettings.theme.colors.foreground)
+                            .foregroundColor(appSettings.effectiveColors.foreground)
                     }
                 }
             }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Color palette for a theme.
-public struct ThemeColors: Sendable {
+public struct ThemeColors: Sendable, Equatable {
     public let background: Color
     public let backgroundSecondary: Color
     public let foreground: Color
@@ -48,7 +48,7 @@ public struct ThemeColors: Sendable {
 }
 
 /// Syntax highlighting colors.
-public struct SyntaxColors: Sendable {
+public struct SyntaxColors: Sendable, Equatable {
     public let keyword: Color
     public let string: Color
     public let comment: Color
