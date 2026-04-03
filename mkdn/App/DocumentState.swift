@@ -39,6 +39,9 @@
         // MARK: - Entrance Gate
         var isLoadingGateActive = false
 
+        // MARK: - Color Palette State
+        public var showColorPalettePopover = false
+
         // MARK: - Sidebar Layout State
         public var isSidebarVisible = false
         public var sidebarWidth: CGFloat = 240

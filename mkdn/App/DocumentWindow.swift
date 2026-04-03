@@ -96,10 +96,10 @@
             }
             .modifier(OptionalDirectoryEnvironment(directoryState: directoryState))
             .popover(
-                isPresented: Bindable(appSettings).showColorPalettePopover,
+                isPresented: Bindable(documentState).showColorPalettePopover,
                 arrowEdge: .bottom
             ) {
-                ColorPalettePopover(isOpen: Bindable(appSettings).showColorPalettePopover)
+                ColorPalettePopover(isOpen: Bindable(documentState).showColorPalettePopover)
             }
             .opacity(isReady ? 1 : 0)
             .onAppear {

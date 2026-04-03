@@ -255,9 +255,6 @@
             "\(Int(round(scaleFactor * 100)))%"
         }
 
-        // MARK: - Color Palette Popover
 
-        /// Whether the color palette popover is shown.
-        public var showColorPalettePopover: Bool = false
     }
 #endif

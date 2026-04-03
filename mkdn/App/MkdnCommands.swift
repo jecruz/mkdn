@@ -178,7 +178,7 @@
                     .keyboardShortcut("t", modifiers: [.command, .shift])
 
                     Button("Color Palette\u{2026}") {
-                        appSettings.showColorPalettePopover = true
+                        documentState?.showColorPalettePopover = true
                     }
                     .keyboardShortcut("k", modifiers: [.command, .shift])
                 }
